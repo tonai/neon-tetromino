@@ -3,6 +3,7 @@ import { GameState } from "../types/logic.ts"
 
 import NextBlock from "./NextBlock.tsx"
 import Well from "./Well.tsx"
+import Controls from "./Controls.tsx"
 
 export interface IGameProps {
   game: GameState
@@ -18,6 +19,7 @@ export default function Game(props: IGameProps) {
       <div className="game__column">
         <NextBlock block={playerState.sequence[0]} />
       </div>
+      {!game.playersState[playerId].gameOver && <Controls />}
     </div>
   )
 }

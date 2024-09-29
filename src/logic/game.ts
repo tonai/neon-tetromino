@@ -10,10 +10,16 @@ export function startRound(game: GameState) {
       return [
         id,
         {
+          actionSpeedCount: 0,
           block,
+          bottom: false,
+          center: false,
           gameOver: false,
+          left: false,
+          right: false,
           score: 0,
           sequence,
+          speedCount: 0,
           well: getWell(),
         },
       ]

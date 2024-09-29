@@ -1,6 +1,10 @@
-import { generateId, randomInArray, shuffleArray } from "@tonai/game-utils/server"
+import {
+  generateId,
+  randomInArray,
+  shuffleArray,
+} from "@tonai/game-utils/server"
 
-import { Block, BlockType, Well } from "../types"
+import { Block, BlockType, PlayerState, Well } from "../types"
 import { tetrominos } from "../constants"
 
 const types = Object.keys(BlockType) as (keyof typeof BlockType)[]
@@ -76,20 +80,49 @@ export function placeBlock(well: Well, block: Block) {
   }
 
   // check for line clears starting from the bottom and working our way up
-  /*
-  for (let row = well.length - 1; row >= 0; ) {
-    if (well[row].every((cell) => !!cell)) {
+  for (let row = well.length - 1; row >= 2; ) {
+    if (well[row].every((cell) => cell)) {
       // drop every row above this one
-      for (let r = row; r >= 0; r--) {
+      for (let r = row - 1; r >= 0; r--) {
         for (let c = 0; c < well[r].length; c++) {
-          well[r][c] = well[r - 1][c]
+          well[r + 1][c] = well[r][c]
         }
       }
+      return false
     } else {
       row--
     }
   }
-  */
 
   return false
+}
+
+export function rotateMatrix(matrix: number[][]) {
+  const N = matrix.length - 1
+  const result = matrix.map((row, i) => row.map((val, j) => matrix[N - j][i]))
+  return result
+}
+
+export function rotate(playerState: PlayerState) {
+  const { block, well } = playerState
+  const matrix = rotateMatrix(block.matrix)
+  if (isValidMove(well, { ...block, matrix })) {
+    block.matrix = matrix
+  }
+}
+
+export function moveLeft(playerState: PlayerState) {
+  const { block, well } = playerState
+  const column = block.column - 1
+  if (isValidMove(well, { ...block, column })) {
+    block.column = column
+  }
+}
+
+export function moveRight(playerState: PlayerState) {
+  const { block, well } = playerState
+  const column = block.column + 1
+  if (isValidMove(well, { ...block, column })) {
+    block.column = column
+  }
 }

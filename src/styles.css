@@ -118,3 +118,43 @@ main {
 .block--I {
   top: calc(var(--block) * -1);
 }
+
+/* Controls */
+.controls {
+  position: absolute;
+  inset: 0;
+}
+.controls__btn {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.controls__bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 20%;
+}
+.controls__center {
+  position: absolute;
+  top: 0;
+  left: 25%;
+  right: 25%;
+  bottom: 20%;
+}
+.controls__left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 20%;
+  width: 25%;
+}
+.controls__right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 20%;
+  width: 25%;
+}
