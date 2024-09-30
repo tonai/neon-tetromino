@@ -148,10 +148,15 @@ Rune.initLogic({
         block.row = block.row + 1
         if (!isValidMove(well, block)) {
           block.row = block.row - 1
-          const gameOver = placeBlock(well, block)
-          if (gameOver) {
+          const result = placeBlock(well, block)
+          if (result === true) {
             playerState.gameOver = true
           } else {
+            if (result > 0) {
+              playerState.score += Math.floor(
+                result * (2 + result * 0.1 - 4 * 0.1)
+              )
+            }
             const nextBlock = playerState.sequence.shift()!
             playerState.block = nextBlock
             if (playerState.sequence.length === 0) {

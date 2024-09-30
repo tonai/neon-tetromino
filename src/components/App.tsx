@@ -30,7 +30,7 @@ export default function App() {
       {game.step === Step.WAIT && <StartScreen />}
       {game.step === Step.PLAY && (
         <>
-          <Players playerIds={game.playerIds} />
+          <Players game={game} />
           <Game game={game} playerId={yourPlayerId} />
         </>
       )}

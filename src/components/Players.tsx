@@ -1,16 +1,18 @@
-import { PlayerId } from "rune-sdk"
-import Avatar from "./Avatar"
+import { GameState } from "../types"
+
+import Player from "./Player"
 
 interface IPlayersProps {
-  playerIds: PlayerId[]
+  game: GameState
 }
 
 export default function Players(props: IPlayersProps) {
-  const { playerIds } = props
+  const { game } = props
+  const { playerIds, playersState } = game
   return (
     <div className="players">
       {playerIds.map((id) => (
-        <Avatar key={id} id={id} />
+        <Player key={id} id={id} playerState={playersState[id]} />
       ))}
     </div>
   )

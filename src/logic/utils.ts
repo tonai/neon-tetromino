@@ -65,7 +65,7 @@ export function isValidMove(well: Well, block: Block) {
   return true
 }
 
-export function placeBlock(well: Well, block: Block) {
+export function placeBlock(well: Well, block: Block): number | true {
   for (let row = 0; row < block.matrix.length; row++) {
     for (let col = 0; col < block.matrix[row].length; col++) {
       if (block.matrix[row][col]) {
@@ -80,21 +80,22 @@ export function placeBlock(well: Well, block: Block) {
   }
 
   // check for line clears starting from the bottom and working our way up
+  let lineCleared = 0
   for (let row = well.length - 1; row >= 2; ) {
     if (well[row].every((cell) => cell)) {
+      lineCleared++
       // drop every row above this one
       for (let r = row - 1; r >= 0; r--) {
         for (let c = 0; c < well[r].length; c++) {
           well[r + 1][c] = well[r][c]
         }
       }
-      return false
     } else {
       row--
     }
   }
 
-  return false
+  return lineCleared
 }
 
 export function rotateMatrix(matrix: number[][]) {

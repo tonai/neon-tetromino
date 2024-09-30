@@ -31,6 +31,17 @@ main {
   width: 100%;
 }
 
+/* Player */
+.player {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+}
+.player__score {
+  margin-top: var(--size);
+}
+
 /* Avatar */
 .avatar {
   display: inline-flex;
