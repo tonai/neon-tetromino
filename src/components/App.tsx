@@ -3,9 +3,11 @@ import { PlayerId } from "rune-sdk"
 
 import { GameState, Step } from "../types/logic.ts"
 
+import Background from "./Background.tsx"
 import Game from "./Game.tsx"
 import Players from "./Players.tsx"
 import StartScreen from "./StartScreen.tsx"
+import Sun from "./Sun.tsx"
 
 export default function App() {
   const [game, setGame] = useState<GameState>()
@@ -27,13 +29,20 @@ export default function App() {
 
   return (
     <>
-      {game.step === Step.WAIT && <StartScreen />}
+      <Sun />
+      {game.step === Step.WAIT && (
+        <>
+          <Background />
+          <StartScreen />
+        </>
+      )}
       {game.step === Step.PLAY && (
         <>
           <Players game={game} />
           <Game game={game} playerId={yourPlayerId} />
         </>
       )}
+      <div className="background__grid"></div>
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { BlockType } from "../types";
+import { BlockType } from "../types"
 
 export const tetrominos = {
   [BlockType.I]: [

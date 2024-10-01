@@ -10,7 +10,7 @@ export default function NextBlock(props: INextBlockProps) {
   const { block } = props
   return (
     <div className="next-block">
-      <Block block={block}/>
+      <Block block={block} />
     </div>
   )
 }

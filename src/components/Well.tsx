@@ -16,7 +16,7 @@ export default function Well(props: IWellProps) {
           cell ? (
             <div
               key={`${i}-${j}`}
-              className="well__cell"
+              className="block__cell"
               style={
                 {
                   "--color": cell,

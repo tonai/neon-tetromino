@@ -1,3 +1,5 @@
+import Title from "./Title"
+
 export default function StartScreen() {
   function ready() {
     Rune.actions.ready()
@@ -5,6 +7,16 @@ export default function StartScreen() {
 
   return (
     <div className="start-screen">
+      <Title />
+      <button className="button" type="button" onClick={ready}>
+        Ready
+      </button>
+      <button className="button" type="button" onClick={ready}>
+        Ready
+      </button>
+      <button className="button" type="button" onClick={ready}>
+        Ready
+      </button>
       <button className="button" type="button" onClick={ready}>
         Ready
       </button>

@@ -91,7 +91,7 @@ Rune.initLogic({
       playerState.left = false
       playerState.actionSpeedCount = 0
     },
-    ready(_, { game, playerId }) {
+    ready(_, { game }) {
       if (game.step !== Step.WAIT) {
         return Rune.invalidAction()
       }

@@ -14,7 +14,7 @@ function getBlock(tetromino: number[][]) {
           key={`${i}-${j}`}
           className="block__cell"
           style={{
-            translate: `calc(var(--block) * ${j}) calc(var(--block) * ${i})`,
+            translate: `calc(var(--block) * ${j}) calc(var(--block) * ${i}) 0px`,
           }}
         />
       ) : null
