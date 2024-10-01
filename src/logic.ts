@@ -150,6 +150,18 @@ Rune.initLogic({
       return
     }
     const entries = Object.entries(game.playersState)
+    // Check GameOver
+    const nonGameOverPlayers = entries.filter(
+      ([, playerState]) => !playerState.gameOver
+    )
+    if (nonGameOverPlayers.length <= 1) {
+      Rune.gameOver({
+        players: Object.fromEntries(
+          entries.map(([id, playerState]) => [id, playerState.score])
+        ),
+      })
+    }
+    // Update loop
     for (const [playerId, playerState] of entries) {
       if (playerState.gameOver) {
         continue
