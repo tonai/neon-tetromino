@@ -10,7 +10,7 @@ export function startRound(game: GameState) {
       return [
         id,
         {
-          actionSpeed: 3,
+          actionSpeed: 2,
           actionSpeedCount: 0,
           block,
           bottom: false,
@@ -27,4 +27,5 @@ export function startRound(game: GameState) {
       ]
     })
   )
+  game.playersGarbage = game.playerIds.map((id) => ({ id, rows: [] }))
 }

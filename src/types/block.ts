@@ -8,6 +8,10 @@ export enum BlockType {
   L = "#f0a000", // orange
 }
 
+export enum GarbageType {
+  G = "#999999",
+}
+
 export interface Block {
   column: number
   id: string

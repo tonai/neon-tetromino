@@ -2,9 +2,10 @@ import {
   generateId,
   randomInArray,
   shuffleArray,
+  unusedRandomInt,
 } from "@tonai/game-utils/server"
 
-import { Block, BlockType, PlayerState, Well } from "../types"
+import { Block, BlockType, GarbageType, PlayerState, Well } from "../types"
 import { tetrominos } from "../constants"
 
 const types = Object.keys(BlockType) as (keyof typeof BlockType)[]
@@ -143,4 +144,40 @@ export function getScore(lineCleared: number, level: number) {
     default:
       return 40 * (1 + level)
   }
+}
+
+export function getGarbage(lineCleared: number) {
+  switch (lineCleared) {
+    case 4:
+      return 4
+    case 3:
+      return 2
+    case 2:
+      return 1
+    default:
+      return 0
+  }
+}
+
+export function addGarbage(well: Well, rows: number[]): boolean {
+  const holes = []
+  const total = rows.reduce((a, b) => a + b, 0)
+  const out = well.slice(0, total).some((row) => row.some((cell) => cell))
+  for (const lines of rows) {
+    const holeIndex = unusedRandomInt(holes, 9)
+    holes.push(holeIndex)
+    // Move up
+    for (let row = lines; row <= well.length - 1; row++) {
+      for (let c = 0; c < well[row].length; c++) {
+        well[row - lines][c] = well[row][c]
+      }
+    }
+    // Insert
+    for (let row = well.length - 1; row > well.length - 1 - lines; row--) {
+      for (let c = 0; c < well[row].length; c++) {
+        well[row][c] = c !== holeIndex ? GarbageType.G : null
+      }
+    }
+  }
+  return out
 }

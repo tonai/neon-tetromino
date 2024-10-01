@@ -1,5 +1,7 @@
 import { startRound } from "./logic/game"
 import {
+  addGarbage,
+  getGarbage,
   getRandomSequence,
   getScore,
   getSpeed,
@@ -19,6 +21,7 @@ Rune.initLogic({
   updatesPerSecond,
   setup: (allPlayerIds) => ({
     playerIds: allPlayerIds,
+    playersGarbage: [],
     playersReady: [],
     playersState: {},
     step: Step.WAIT,
@@ -29,6 +32,12 @@ Rune.initLogic({
         return Rune.invalidAction()
       }
       const playerState = game.playersState[playerId]
+      // Reset
+      playerState.bottom = false
+      playerState.center = false
+      playerState.left = false
+      playerState.right = false
+      // Hold
       playerState.bottom = true
     },
     bottomUp(_, { game, playerId }) {
@@ -44,6 +53,12 @@ Rune.initLogic({
       }
       const playerState = game.playersState[playerId]
       rotate(playerState)
+      // Reset
+      playerState.bottom = false
+      playerState.center = false
+      playerState.left = false
+      playerState.right = false
+      // Hold
       playerState.center = true
     },
     centerUp(_, { game, playerId }) {
@@ -60,6 +75,12 @@ Rune.initLogic({
       }
       const playerState = game.playersState[playerId]
       moveLeft(playerState)
+      // Reset
+      playerState.bottom = false
+      playerState.center = false
+      playerState.left = false
+      playerState.right = false
+      // Hold
       playerState.left = true
     },
     leftUp(_, { game, playerId }) {
@@ -91,6 +112,12 @@ Rune.initLogic({
       }
       const playerState = game.playersState[playerId]
       moveRight(playerState)
+      // Reset
+      playerState.bottom = false
+      playerState.center = false
+      playerState.left = false
+      playerState.right = false
+      // Hold
       playerState.right = true
     },
     rightUp(_, { game, playerId }) {
@@ -123,14 +150,18 @@ Rune.initLogic({
       return
     }
     const entries = Object.entries(game.playersState)
-    for (const [, playerState] of entries) {
+    for (const [playerId, playerState] of entries) {
       if (playerState.gameOver) {
         continue
       }
+      const speed = getSpeed(Math.floor(playerState.level))
       // Player controls
       if (playerState.center || playerState.left || playerState.right) {
         playerState.actionSpeedCount++
-        if (playerState.actionSpeedCount > playerState.actionSpeed) {
+        if (
+          playerState.actionSpeedCount >
+          Math.min(playerState.actionSpeed, speed)
+        ) {
           if (playerState.center) {
             rotate(playerState)
           } else if (playerState.left) {
@@ -143,7 +174,6 @@ Rune.initLogic({
       }
       // Black fall
       playerState.speedCount++
-      const speed = getSpeed(Math.floor(playerState.level))
       if (playerState.speedCount > speed || playerState.bottom) {
         const { block, well } = playerState
         block.row = block.row + 1
@@ -153,6 +183,7 @@ Rune.initLogic({
           if (result === true) {
             playerState.gameOver = true
           } else {
+            // Score
             if (result > 0) {
               playerState.score += getScore(
                 result,
@@ -166,11 +197,52 @@ Rune.initLogic({
                 playerState.level += result * 0.1
               }
             }
+            // Next block
             const nextBlock = playerState.sequence.shift()!
             playerState.block = nextBlock
             if (playerState.sequence.length === 0) {
               const sequence = getRandomSequence()
               playerState.sequence = sequence
+            }
+            let garbage = getGarbage(result)
+            const playerGarbage = game.playersGarbage.find(
+              ({ id, rows }) => id === playerId && rows.length > 0
+            )
+            // Cancel garbage
+            if (playerGarbage && garbage) {
+              const total = playerGarbage.rows.reduce((a, b) => a + b, 0)
+              if (total <= garbage) {
+                playerGarbage.rows = []
+                garbage -= total
+              } else {
+                playerGarbage.rows = playerGarbage.rows
+                  .map((lines) => {
+                    const remaining = Math.min(lines - garbage, 0)
+                    garbage -= lines
+                    return remaining
+                  })
+                  .filter((lines) => lines)
+              }
+            }
+            // Add garbage to well
+            if (playerGarbage) {
+              addGarbage(well, playerGarbage.rows)
+              playerGarbage.rows = []
+            }
+            // Send garbage
+            if (garbage) {
+              const playerGarbage = game.playersGarbage.find(
+                ({ id }) => id !== playerId
+              )
+              if (playerGarbage) {
+                // Insert garbage and move item at the end of the list
+                playerGarbage.rows.push(garbage)
+                game.playersGarbage.splice(
+                  game.playersGarbage.indexOf(playerGarbage),
+                  1
+                )
+                game.playersGarbage.push(playerGarbage)
+              }
             }
           }
         } else if (playerState.bottom) {
