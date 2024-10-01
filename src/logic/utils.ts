@@ -127,3 +127,20 @@ export function moveRight(playerState: PlayerState) {
     block.column = column
   }
 }
+
+export function getSpeed(level: number) {
+  return Math.max(10 - level, 0)
+}
+
+export function getScore(lineCleared: number, level: number) {
+  switch (lineCleared) {
+    case 4:
+      return 1200 * (1 + level)
+    case 3:
+      return 300 * (1 + level)
+    case 2:
+      return 100 * (1 + level)
+    default:
+      return 40 * (1 + level)
+  }
+}

@@ -1,6 +1,8 @@
 import { startRound } from "./logic/game"
 import {
   getRandomSequence,
+  getScore,
+  getSpeed,
   isValidMove,
   moveLeft,
   moveRight,
@@ -16,11 +18,9 @@ Rune.initLogic({
   maxPlayers: 6,
   updatesPerSecond,
   setup: (allPlayerIds) => ({
-    actionSpeed: 3, // Number of frames before next action
     playerIds: allPlayerIds,
     playersReady: [],
     playersState: {},
-    speed: 6, // Number of frames before next fall
     step: Step.WAIT,
   }),
   actions: {
@@ -130,7 +130,7 @@ Rune.initLogic({
       // Player controls
       if (playerState.center || playerState.left || playerState.right) {
         playerState.actionSpeedCount++
-        if (playerState.actionSpeedCount > game.actionSpeed) {
+        if (playerState.actionSpeedCount > playerState.actionSpeed) {
           if (playerState.center) {
             rotate(playerState)
           } else if (playerState.left) {
@@ -143,7 +143,8 @@ Rune.initLogic({
       }
       // Black fall
       playerState.speedCount++
-      if (playerState.speedCount > game.speed || playerState.bottom) {
+      const speed = getSpeed(Math.floor(playerState.level))
+      if (playerState.speedCount > speed || playerState.bottom) {
         const { block, well } = playerState
         block.row = block.row + 1
         if (!isValidMove(well, block)) {
@@ -153,9 +154,17 @@ Rune.initLogic({
             playerState.gameOver = true
           } else {
             if (result > 0) {
-              playerState.score += Math.floor(
-                result * (2 + result * 0.1 - 4 * 0.1)
+              playerState.score += getScore(
+                result,
+                Math.floor(playerState.level)
               )
+              // Level increase every 10 rows
+              const level = Math.floor(playerState.level + result * 0.1)
+              if (level > Math.floor(playerState.level)) {
+                playerState.level = level
+              } else {
+                playerState.level += result * 0.1
+              }
             }
             const nextBlock = playerState.sequence.shift()!
             playerState.block = nextBlock
@@ -164,6 +173,8 @@ Rune.initLogic({
               playerState.sequence = sequence
             }
           }
+        } else if (playerState.bottom) {
+          playerState.score += 1
         }
         playerState.speedCount = 0
       }

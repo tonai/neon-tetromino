@@ -9,12 +9,14 @@ export enum Step {
 export type Well = (BlockType | null)[][]
 
 export interface PlayerState {
+  actionSpeed: number // Number of frames before next action
   actionSpeedCount: number
   bottom: boolean
   block: Block
   center: boolean
   gameOver: boolean
   left: boolean
+  level: number
   right: boolean
   score: number
   sequence: Block[]
@@ -23,11 +25,9 @@ export interface PlayerState {
 }
 
 export interface GameState {
-  actionSpeed: number
   playerIds: PlayerId[]
   playersReady: PlayerId[]
   playersState: Record<PlayerId, PlayerState>
-  speed: number
   step: Step
 }
 
