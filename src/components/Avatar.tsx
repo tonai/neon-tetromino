@@ -1,19 +1,25 @@
 import { Player, PlayerId } from "rune-sdk"
 
 interface IAvatarProps {
+  clearedLines: number[]
   id?: PlayerId
   name?: boolean
   player?: Player
 }
 
 export default function Avatar(props: IAvatarProps) {
-  const { id, name } = props
+  const { clearedLines, id, name } = props
   const player = props.player ?? Rune.getPlayerInfo(id ?? "")
   return (
     <div className="avatar">
       {name && <div className="avatar__name">{player.displayName}</div>}
       <div className="avatar__wrapper">
         <img className="avatar__image" src={player.avatarUrl} />
+        {clearedLines.map((lines, i) => (
+          <div key={i} className="avatar__lines">
+            x{lines}
+          </div>
+        ))}
       </div>
     </div>
   )

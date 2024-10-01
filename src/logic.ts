@@ -197,6 +197,7 @@ Rune.initLogic({
           } else {
             // Score
             if (result > 0) {
+              playerState.clearedLines.push(result)
               playerState.score += getScore(
                 result,
                 Math.floor(playerState.level)

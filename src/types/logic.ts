@@ -14,6 +14,7 @@ export interface PlayerState {
   bottom: boolean
   block: Block
   center: boolean
+  clearedLines: number[]
   gameOver: boolean
   left: boolean
   level: number

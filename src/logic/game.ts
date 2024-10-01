@@ -15,6 +15,7 @@ export function startRound(game: GameState) {
           block,
           bottom: false,
           center: false,
+          clearedLines: [],
           gameOver: false,
           left: false,
           level: 1,

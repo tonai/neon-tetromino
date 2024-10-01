@@ -9,10 +9,10 @@ interface IPlayerProps {
 
 export default function Player(props: IPlayerProps) {
   const { id, playerState } = props
-  const { score } = playerState
+  const { clearedLines, score } = playerState
   return (
     <div className="player">
-      <Avatar id={id} />
+      <Avatar clearedLines={clearedLines} id={id} />
       <div className="player__score">{score}</div>
     </div>
   )
