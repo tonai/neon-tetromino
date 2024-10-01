@@ -108,6 +108,34 @@ main {
   display: flex;
   flex-direction: column;
 }
+.game__garbages {
+  width: var(--block);
+  height: calc(var(--block) * 15);
+  margin-top: var(--block);
+  background-color: #666;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.game__garbage {
+  width: var(--block);
+  height: var(--block);
+  background: red;
+  scale: 0.7;
+  animation: 2s linear infinite both shine;
+}
+@keyframes shine {
+  0% {
+    background: red;
+  }
+  50% {
+    background: yellow;
+  }
+  100% {
+    background: red;
+  }
+}
 
 /* Well */
 .well {
