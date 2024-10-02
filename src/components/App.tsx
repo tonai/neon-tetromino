@@ -33,7 +33,7 @@ export default function App() {
       {game.step === Step.WAIT && (
         <>
           <Background />
-          <StartScreen />
+          <StartScreen players={game.playerIds} votes={game.votes} />
         </>
       )}
       {game.step === Step.PLAY && (

@@ -6,6 +6,11 @@ export enum Step {
   WAIT,
 }
 
+export enum Mode {
+  ENDLESS = "Endless",
+  BR = "Battle Royale",
+}
+
 export type Well = (BlockType | GarbageType | null)[][]
 
 export interface PlayerState {
@@ -31,11 +36,12 @@ export interface PlayerGarbage {
 }
 
 export interface GameState {
+  mode: Mode
   playerIds: PlayerId[]
   playersGarbage: PlayerGarbage[]
-  playersReady: PlayerId[]
   playersState: Record<PlayerId, PlayerState>
   step: Step
+  votes: Record<PlayerId, Mode | undefined>
 }
 
 type GameActions = {
@@ -45,7 +51,7 @@ type GameActions = {
   centerUp: () => void
   leftDown: () => void
   leftUp: () => void
-  ready: () => void
+  ready: (vote: Mode) => void
   rightDown: () => void
   rightUp: () => void
 }

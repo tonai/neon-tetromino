@@ -1,3 +1,4 @@
+import { votesArray } from "@tonai/game-utils/server"
 import { startRound } from "./logic/game"
 import {
   addGarbage,
@@ -11,7 +12,7 @@ import {
   placeBlock,
   rotate,
 } from "./logic/utils"
-import { Step } from "./types"
+import { Mode, Step } from "./types"
 
 const updatesPerSecond = 10
 
@@ -20,11 +21,12 @@ Rune.initLogic({
   maxPlayers: 6,
   updatesPerSecond,
   setup: (allPlayerIds) => ({
+    mode: Mode.ENDLESS,
     playerIds: allPlayerIds,
     playersGarbage: [],
-    playersReady: [],
     playersState: {},
     step: Step.WAIT,
+    votes: {},
   }),
   actions: {
     bottomDown(_, { game, playerId }) {
@@ -91,20 +93,20 @@ Rune.initLogic({
       playerState.left = false
       playerState.actionSpeedCount = 0
     },
-    ready(_, { game }) {
+    ready(vote: Mode, { game, playerId }) {
       if (game.step !== Step.WAIT) {
         return Rune.invalidAction()
       }
-      startRound(game)
-      /*const index = game.playersReady.indexOf(playerId)
-      if (index !== -1) {
-        game.playersReady.splice(index, 1)
+      if (game.votes[playerId] === vote) {
+        game.votes[playerId] = undefined
       } else {
-        game.playersReady.push(playerId)
-        if (game.playersReady.length === game.playerIds.length) {
-          startRound(game)
-        }
-      }*/
+        game.votes[playerId] = vote
+      }
+      const votes = Object.values(game.votes).filter((mode) => mode) as Mode[]
+      if (votes.length === game.playerIds.length) {
+        game.mode = votesArray(votes)
+        startRound(game)
+      }
     },
     rightDown(_, { game, playerId }) {
       if (game.step !== Step.PLAY) {
@@ -154,7 +156,10 @@ Rune.initLogic({
     const nonGameOverPlayers = entries.filter(
       ([, playerState]) => !playerState.gameOver
     )
-    if (nonGameOverPlayers.length <= 1) {
+    if (
+      (game.mode === Mode.BR && nonGameOverPlayers.length <= 1) ||
+      (game.mode === Mode.ENDLESS && nonGameOverPlayers.length === 0)
+    ) {
       Rune.gameOver({
         players: Object.fromEntries(
           entries.map(([id, playerState]) => [id, playerState.score])
@@ -217,44 +222,47 @@ Rune.initLogic({
               const sequence = getRandomSequence()
               playerState.sequence = sequence
             }
-            let garbage = getGarbage(result)
-            const playerGarbage = game.playersGarbage.find(
-              ({ id, rows }) => id === playerId && rows.length > 0
-            )
-            // Cancel garbage
-            if (playerGarbage && garbage) {
-              const total = playerGarbage.rows.reduce((a, b) => a + b, 0)
-              if (total <= garbage) {
-                playerGarbage.rows = []
-                garbage -= total
-              } else {
-                playerGarbage.rows = playerGarbage.rows
-                  .map((lines) => {
-                    const remaining = Math.min(lines - garbage, 0)
-                    garbage -= lines
-                    return remaining
-                  })
-                  .filter((lines) => lines)
-              }
-            }
-            // Add garbage to well
-            if (playerGarbage) {
-              addGarbage(well, playerGarbage.rows)
-              playerGarbage.rows = []
-            }
-            // Send garbage
-            if (garbage) {
+            // Garbage
+            if (game.mode === Mode.BR) {
+              let garbage = getGarbage(result)
               const playerGarbage = game.playersGarbage.find(
-                ({ id }) => id !== playerId
+                ({ id, rows }) => id === playerId && rows.length > 0
               )
+              // Cancel garbage
+              if (playerGarbage && garbage) {
+                const total = playerGarbage.rows.reduce((a, b) => a + b, 0)
+                if (total <= garbage) {
+                  playerGarbage.rows = []
+                  garbage -= total
+                } else {
+                  playerGarbage.rows = playerGarbage.rows
+                    .map((lines) => {
+                      const remaining = Math.min(lines - garbage, 0)
+                      garbage -= lines
+                      return remaining
+                    })
+                    .filter((lines) => lines)
+                }
+              }
+              // Add garbage to well
               if (playerGarbage) {
-                // Insert garbage and move item at the end of the list
-                playerGarbage.rows.push(garbage)
-                game.playersGarbage.splice(
-                  game.playersGarbage.indexOf(playerGarbage),
-                  1
+                addGarbage(well, playerGarbage.rows)
+                playerGarbage.rows = []
+              }
+              // Send garbage
+              if (garbage) {
+                const playerGarbage = game.playersGarbage.find(
+                  ({ id }) => id !== playerId
                 )
-                game.playersGarbage.push(playerGarbage)
+                if (playerGarbage) {
+                  // Insert garbage and move item at the end of the list
+                  playerGarbage.rows.push(garbage)
+                  game.playersGarbage.splice(
+                    game.playersGarbage.indexOf(playerGarbage),
+                    1
+                  )
+                  game.playersGarbage.push(playerGarbage)
+                }
               }
             }
           }
