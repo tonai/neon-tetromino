@@ -8,16 +8,16 @@ export default function StartScreen() {
   return (
     <div className="start-screen">
       <Title />
-      <button className="button" type="button" onClick={ready}>
+      <button className="button text" type="button" onClick={ready}>
         Ready
       </button>
-      <button className="button" type="button" onClick={ready}>
+      <button className="button text" type="button" onClick={ready}>
         Ready
       </button>
-      <button className="button" type="button" onClick={ready}>
+      <button className="button text" type="button" onClick={ready}>
         Ready
       </button>
-      <button className="button" type="button" onClick={ready}>
+      <button className="button text" type="button" onClick={ready}>
         Ready
       </button>
     </div>

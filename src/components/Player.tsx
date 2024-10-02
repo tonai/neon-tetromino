@@ -13,7 +13,7 @@ export default function Player(props: IPlayerProps) {
   return (
     <div className="player">
       <Avatar clearedLines={clearedLines} id={id} />
-      <div className="player__score">{score}</div>
+      <div className="player__score text">{score}</div>
     </div>
   )
 }

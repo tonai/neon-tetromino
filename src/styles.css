@@ -74,6 +74,14 @@
   --labs-sys-color-sun-glow: #b9f;
   --labs-sys-color-star: #f6c0c0;
   --base-speed: 4s;
+  --reflect-gradient: linear-gradient(
+    #032d50 25%,
+    #00a1ef 35%,
+    white 50%,
+    #20125f 50%,
+    #8313e7 55%,
+    #ff61af 75%
+  );
 }
 body,
 html {
@@ -208,6 +216,7 @@ main {
   transform: translateY(-1em);
   left: 0;
   top: 38%;
+  z-index: 10;
 }
 .background__grid {
   background: linear-gradient(
@@ -392,6 +401,7 @@ main {
 }
 .player__score {
   margin-top: var(--size);
+  font-size: calc(var(--size) * 6) !important;
 }
 
 /* Avatar */
@@ -425,7 +435,7 @@ main {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  font-size: calc(var(--size) * 5);
+  font-size: calc(var(--size) * 10);
   text-align: center;
   bottom: 0;
   right: 0;
@@ -435,7 +445,7 @@ main {
 }
 @keyframes message {
   0% {
-    translate: 100% 0;
+    translate: 50% 100%;
     opacity: 0;
   }
   20% {
@@ -445,7 +455,7 @@ main {
     opacity: 1;
   }
   100% {
-    translate: 100% -200%;
+    translate: 50% -100%;
     opacity: 0;
   }
 }
@@ -462,39 +472,15 @@ main {
   position: absolute;
   bottom: 0;
   height: 64%;
-  padding: 20% 0 10%;
+  padding: calc(var(--size) * 25) 0 calc(var(--size) * 5);
 }
 
 /* Title */
 .title {
-  position: absolute;
+  position: absolute !important;
   top: 0%;
   font-family: "Exo", sans-serif;
   font-size: calc(var(--size) * 17);
-}
-.title__back {
-  text-shadow:
-    0 0 0.1em #8ba2d0,
-    0 0 0.2em black,
-    0 0 5em #165ff3;
-  -webkit-text-stroke: 0.06em rgba(0, 0, 0, 0.5);
-}
-.title__front {
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(
-    #032d50 25%,
-    #00a1ef 35%,
-    white 50%,
-    #20125f 50%,
-    #8313e7 55%,
-    #ff61af 75%
-  );
-  -webkit-text-stroke: 0.01em #94a0b9;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
 }
 .title__sub-title {
   font-family: "Mr Dafoe", cursive;
@@ -510,8 +496,8 @@ main {
   position: absolute;
   top: 0;
   left: calc(var(--size) * -2);
-  translate: 0 -50%;
-  rotate: -7deg;
+  translate: 0 -60%;
+  rotate: -10deg;
 }
 
 /* Game */
@@ -676,11 +662,7 @@ main {
 
 /* Helpers */
 .button {
-  font-family: "Exo", sans-serif;
-  font-size: calc(var(--size) * 10);
-  font-weight: bold;
   padding: calc(var(--size) * 2) calc(var(--size) * 8);
-  color: #fff;
   background: linear-gradient(45deg, #ff00ff, #00ffff);
   border: none;
   border-radius: calc(var(--size) * 10);
@@ -690,7 +672,6 @@ main {
   box-shadow:
     0 0 10px rgba(255, 0, 255, 0.7),
     0 0 20px rgba(0, 255, 255, 0.7);
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
   position: relative;
   overflow: hidden;
   -webkit-text-stroke: 0.06em rgba(0, 0, 0, 0.5);
@@ -702,4 +683,31 @@ main {
   box-shadow:
     0 0 15px rgba(255, 0, 255, 0.9),
     0 0 30px rgba(0, 255, 255, 0.9);
+}
+.reflect {
+  position: relative;
+}
+.reflect__front {
+  position: absolute;
+  inset: 0;
+  background-image: var(--reflect-gradient);
+  -webkit-text-stroke: 0.01em #94a0b9;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.reflect__back {
+  text-shadow:
+  0 0 0.1em #8ba2d0,
+  0 0 0.2em black,
+  0 0 5em #165ff3;
+-webkit-text-stroke: 0.06em rgba(0, 0, 0, 0.5);
+}
+.text {
+  color: #fff;
+  font-family: "Exo", sans-serif;
+  font-size: calc(var(--size) * 10);
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
 }

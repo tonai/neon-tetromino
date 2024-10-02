@@ -16,8 +16,9 @@ export default function Avatar(props: IAvatarProps) {
       <div className="avatar__wrapper">
         <img className="avatar__image" src={player.avatarUrl} />
         {clearedLines.map((lines, i) => (
-          <div key={i} className="avatar__lines">
-            x{lines}
+          <div key={i} className="avatar__lines reflect">
+            <span className="reflect__back">x{lines}</span>
+            <span className="reflect__front">x{lines}</span>
           </div>
         ))}
       </div>
