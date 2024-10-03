@@ -3,7 +3,7 @@ export default function Title() {
     <div className="title reflect">
       <span className="reflect__back">TETROMINO</span>
       <span className="reflect__front">TETROMINO</span>
-      <div className="title__sub-title">neon</div>
+      <div className="title__sub-title neon">neon</div>
     </div>
   )
 }

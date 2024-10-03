@@ -16,7 +16,6 @@ export default function Game(props: IGameProps) {
   const { playersState, playersGarbage } = game
   const playerState = playersState[playerId]
   const playerGarbage = playersGarbage.find(({ id }) => id === playerId)
-  console.log(playerGarbage)
   const totalGarbage = createArray(
     playerGarbage?.rows.reduce((a, b) => a + b, 0) ?? 0
   )

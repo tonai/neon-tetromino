@@ -6,11 +6,12 @@ import Title from "./Title"
 
 export interface IStartScreenProps {
   players: string[]
+  t: (word: string) => string
   votes: Record<string, Mode | undefined>
 }
 
 export default function StartScreen(props: IStartScreenProps) {
-  const { players, votes } = props
+  const { players, t, votes } = props
   const playersByMode = Object.entries(votes).reduce<Record<Mode, string[]>>(
     (acc, [id, vote]) => {
       if (vote) {
@@ -31,7 +32,7 @@ export default function StartScreen(props: IStartScreenProps) {
             type="button"
             onClick={() => Rune.actions.ready(mode)}
           >
-            {mode}
+            {t(mode)}
           </button>
           <div className="start-screen__players">
             {playersByMode[mode].map((id) => (
