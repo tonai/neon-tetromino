@@ -9,10 +9,11 @@ import { createArray } from "@tonai/game-utils"
 export interface IGameProps {
   game: GameState
   playerId: PlayerId
+  showControls: boolean
 }
 
 export default function Game(props: IGameProps) {
-  const { game, playerId } = props
+  const { game, playerId, showControls } = props
   const { playersState, playersGarbage } = game
   const playerState = playersState[playerId]
   const playerGarbage = playersGarbage.find(({ id }) => id === playerId)
@@ -30,7 +31,9 @@ export default function Game(props: IGameProps) {
           ))}
         </div>
       </div>
-      {!game.playersState[playerId].gameOver && <Controls />}
+      {!game.playersState[playerId].gameOver && (
+        <Controls showControls={showControls} />
+      )}
     </div>
   )
 }

@@ -1,6 +1,15 @@
-export default function Controls() {
+interface IControlsProps {
+  showControls: boolean
+}
+
+export default function Controls(props: IControlsProps) {
+  const { showControls } = props
+  const classNames = ["controls"]
+  if (showControls) {
+    classNames.push("controls--show")
+  }
   return (
-    <div className="controls">
+    <div className={classNames.join(" ")}>
       <button
         className="controls__btn controls__bottom"
         type="button"

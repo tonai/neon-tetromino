@@ -27,6 +27,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     rotate: "rotate",
     "move right": "move right",
     "speed up": "speed up",
+    "Show controls regions": "Show controls regions",
   },
   fr: {
     help: "aide",
@@ -37,6 +38,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     rotate: "tourner",
     "move right": "aller à droite",
     "speed up": "accélerer",
+    "Show controls regions": "Afficher les régions de contrôle",
   },
   ru: {
     help: "помощь",
@@ -47,6 +49,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     rotate: "вращать",
     "move right": "двигаться вправо",
     "speed up": "ускорить",
+    "Show controls regions": "Показать области управления",
   },
   es: {
     help: "ayuda",
@@ -57,6 +60,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     rotate: "girar",
     "move right": "moverse a la derecha",
     "speed up": "acelerar",
+    "Show controls regions": "Mostrar regiones de control",
   },
   pt: {
     help: "ajuda",
@@ -67,6 +71,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     rotate: "girar",
     "move right": "deslocar para a direita",
     "speed up": "acelerar",
+    "Show controls regions": "Mostrar regiões de controlos",
   },
   cn: {
     help: "帮助",
@@ -77,5 +82,6 @@ export const translations: Record<Locale, Record<string, string>> = {
     rotate: "旋转",
     "move right": "向右移动",
     "speed up": "加快",
+    "Show controls regions": "显示控制区域",
   },
 }

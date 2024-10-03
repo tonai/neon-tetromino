@@ -2,6 +2,7 @@ import { MouseEvent, useEffect } from "react"
 
 import Gear from "../icons/Gear"
 import { Locale, locales } from "../constants/i18n"
+import Switch from "./Switch"
 
 interface ISettingsProps {
   close: () => void
@@ -9,11 +10,22 @@ interface ISettingsProps {
   open: (event: MouseEvent) => void
   opened: boolean
   setLocale: (locale: Locale) => void
+  setShowControls: (showControls: boolean) => void
+  showControls: boolean
   t: (word: string) => string
 }
 
 export default function Settings(props: ISettingsProps) {
-  const { close, locale: currentLocale, open, opened, setLocale, t } = props
+  const {
+    close,
+    locale: currentLocale,
+    open,
+    opened,
+    setLocale,
+    setShowControls,
+    showControls,
+    t,
+  } = props
   const classNames = ["settings"]
   if (opened) {
     classNames.push("settings--open")
@@ -66,6 +78,13 @@ export default function Settings(props: ISettingsProps) {
               </div>
             )
           })}
+        </div>
+        <div className="settings__controls">
+          <Switch
+            label={t("Show controls regions")}
+            onChange={setShowControls}
+            value={showControls}
+          />
         </div>
       </div>
     </>

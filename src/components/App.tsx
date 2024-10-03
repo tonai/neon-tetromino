@@ -21,6 +21,7 @@ export default function App() {
   const [helpOpen, setHelpOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [locale, setLocale] = useState<Locale>("en")
+  const [showControls, setShowControls] = useState(false)
 
   const closeSettings = useCallback(() => {
     setSettingsOpen(false)
@@ -62,7 +63,11 @@ export default function App() {
       {game.step === Step.PLAY && (
         <>
           <Players game={game} />
-          <Game game={game} playerId={yourPlayerId} />
+          <Game
+            game={game}
+            playerId={yourPlayerId}
+            showControls={showControls}
+          />
         </>
       )}
       <div className="background__grid"></div>
@@ -72,6 +77,8 @@ export default function App() {
         open={openSettings}
         opened={settingsOpen}
         setLocale={setLocale}
+        setShowControls={setShowControls}
+        showControls={showControls}
         t={t}
       />
       <Help
