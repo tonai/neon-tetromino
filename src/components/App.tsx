@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { MouseEvent, useCallback, useEffect, useState } from "react"
 import { PlayerId } from "rune-sdk"
 import { createTranslator } from "@tonai/game-utils"
 
@@ -9,6 +9,7 @@ import Background from "./Background.tsx"
 import Help from "./Help.tsx"
 import Game from "./Game.tsx"
 import Players from "./Players.tsx"
+import Settings from "./Settings.tsx"
 import StartScreen from "./StartScreen.tsx"
 import Sun from "./Sun.tsx"
 
@@ -18,8 +19,16 @@ export default function App() {
   const [game, setGame] = useState<GameState>()
   const [yourPlayerId, setYourPlayerId] = useState<PlayerId | undefined>()
   const [helpOpen, setHelpOpen] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
   const [locale, setLocale] = useState<Locale>("en")
 
+  const closeSettings = useCallback(() => {
+    setSettingsOpen(false)
+  }, [])
+  const openSettings = useCallback((event: MouseEvent) => {
+    event.stopPropagation()
+    setSettingsOpen(true)
+  }, [])
   const t = useCallback(
     (word: string) => {
       return translator(locale)(word)
@@ -57,14 +66,20 @@ export default function App() {
         </>
       )}
       <div className="background__grid"></div>
-      <button
-        className="app__help neon"
-        type="button"
-        onClick={() => setHelpOpen(true)}
-      >
-        {t("help")}
-      </button>
-      <Help close={() => setHelpOpen(false)} open={helpOpen} t={t} />
+      <Settings
+        close={closeSettings}
+        locale={locale}
+        open={openSettings}
+        opened={settingsOpen}
+        setLocale={setLocale}
+        t={t}
+      />
+      <Help
+        close={() => setHelpOpen(false)}
+        open={() => setHelpOpen(true)}
+        opened={helpOpen}
+        t={t}
+      />
     </>
   )
 }
