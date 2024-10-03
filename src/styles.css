@@ -464,6 +464,9 @@ p {
 .start-screen__mode {
   position: relative;
 }
+.start-screen__help:hover {
+  scale: 1.1;
+}
 .start-screen__players {
   position: absolute;
   top: 100%;
@@ -485,6 +488,50 @@ p {
     translate: 0 0;
     opacity: 1;
   }
+}
+/* Tooltip */
+.tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  translate: -50% -50%;
+}
+.tooltip__button {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: var(--size) solid white;
+  background: transparent;
+  width: calc(var(--size) * 10);
+  height: calc(var(--size) * 10);
+  border-radius: 100px;
+  box-shadow: 0 0 var(--size) #fff, inset 0 0 var(--size) #fff;
+  text-shadow: 0 0 var(--size) #fff;
+  transition: scale 400ms ease;
+  scale: 1;
+}
+.tooltip__content {
+  position: absolute;
+  max-width: calc(var(--size) * 65);
+  width: max-content;
+  background-color: var(--box-color);
+  top: 50%;
+  left: 50%;
+  translate: 0 -100%;
+  padding: calc(var(--size) * 2);
+  transform-origin: bottom left;
+  transition: scale 400ms ease, opacity 400ms ease;
+  scale: 0;
+  opacity: 0;
+  border-radius: calc(var(--size) * 4) !important;
+}
+.tooltip__content p {
+  margin: 0;
+}
+.tooltip__content--open {
+  scale: 1;
+  opacity: 1;
 }
 
 /* Title */
@@ -887,6 +934,12 @@ p {
 .hidden {
   display: none;
 }
+.box {
+  background-color: var(--box-color);
+  border-radius: calc(var(--size) * 10);
+  border: var(--size) solid var(--line-color);
+  box-shadow: 0 0 var(--size) var(--line-color), inset 0 0 var(--size) var(--line-color);
+}
 .modale {
   position: absolute;
   z-index: 102;
@@ -901,10 +954,6 @@ p {
 .modale__inside {
   margin: 10%;
   flex: 1;
-  background-color: var(--box-color);
-  border-radius: calc(var(--size) * 10);
-  border: var(--size) solid var(--line-color);
-  box-shadow: 0 0 var(--size) var(--line-color), inset 0 0 var(--size) var(--line-color);
   position: relative;
   translate: 100% 0;
   transition: translate 400ms ease;

@@ -21,7 +21,9 @@ export const translations: Record<Locale, Record<string, string>> = {
   en: {
     help: "help",
     Endless: "Endless",
+    "[Endless]": "Play until you can't place new blocks",
     "Battle Royale": "Battle Royale",
+    "[Battle Royale]": "Try to be the last standing",
     "[help]": "Tap or hold in one of the 4 regions to trigger the action",
     "move left": "move left",
     rotate: "rotate",
@@ -32,7 +34,9 @@ export const translations: Record<Locale, Record<string, string>> = {
   fr: {
     help: "aide",
     Endless: "Sans fin",
+    "[Endless]": "Jouez jusqu'à ce que vous ne puissiez plus placer de nouveaux blocs",
     "Battle Royale": "Bataille Royale",
+    "[Battle Royale]": "Essayez d'être le dernier debout",
     "[help]": "Appuyez ou maintenez l'une des 4 régions pour déclencher l'action",
     "move left": "aller à gauche",
     rotate: "tourner",
@@ -43,7 +47,9 @@ export const translations: Record<Locale, Record<string, string>> = {
   ru: {
     help: "помощь",
     Endless: "Бесконечный",
+    "[Endless]": "Играйте до тех пор, пока не сможете размещать новые блоки.",
     "Battle Royale": "Королевская битва",
+    "[Battle Royale]": "Постарайся остаться последним выжившим.",
     "[help]": "Нажмите или удерживайте одну из 4 областей, чтобы запустить действие.",
     "move left": "двигаться влево",
     rotate: "вращать",
@@ -54,7 +60,9 @@ export const translations: Record<Locale, Record<string, string>> = {
   es: {
     help: "ayuda",
     Endless: "Sin fin",
+    "[Endless]": "Juega hasta que no puedas colocar nuevos bloques",
     "Battle Royale": "Batalla real",
+    "[Battle Royale]": "Intenta ser el último en pie",
     "[help]": "Toque o mantenga presionada una de las 4 regiones para activar la acción.",
     "move left": "moverse a la izquierda",
     rotate: "girar",
@@ -65,7 +73,9 @@ export const translations: Record<Locale, Record<string, string>> = {
   pt: {
     help: "ajuda",
     Endless: "Sem fim",
+    "[Endless]": "Jogue até não conseguir colocar novos blocos",
     "Battle Royale": "Batalha real",
+    "[Battle Royale]": "Tente ser o último sobrevivente",
     "[help]": "Toque ou mantenha pressionada uma das 4 regiões para acionar a ação",
     "move left": "deslocar para a esquerda",
     rotate: "girar",
@@ -76,7 +86,9 @@ export const translations: Record<Locale, Record<string, string>> = {
   cn: {
     help: "帮助",
     Endless: "无穷无尽",
+    "[Endless]": "玩到无法放置新方块为止",
     "Battle Royale": "大逃杀",
+    "[Battle Royale]": "努力坚持到最后",
     "[help]": "点击或按住 4 个区域之一即可触发操作",
     "move left": "向左移动",
     rotate: "旋转",

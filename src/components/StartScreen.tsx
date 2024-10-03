@@ -3,6 +3,7 @@ import { Mode } from "../types"
 
 import Avatar from "./Avatar"
 import Title from "./Title"
+import Tooltip from "./Tooltip"
 
 export interface IStartScreenProps {
   players: string[]
@@ -34,6 +35,9 @@ export default function StartScreen(props: IStartScreenProps) {
           >
             {t(mode)}
           </button>
+          <Tooltip>
+            <p>{t(`[${mode}]`)}</p>
+          </Tooltip>
           <div className="start-screen__players">
             {playersByMode[mode].map((id) => (
               <Avatar key={id} className="start-screen__player" id={id} />

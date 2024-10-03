@@ -26,7 +26,7 @@ export default function Help(props: IHelpProps) {
         {t("help")}
       </button>
       <div className={classNames.join(" ")} onClick={close}>
-        <div className="modale__inside" onClick={stop}>
+        <div className="modale__inside box" onClick={stop}>
           <button
             className="modale__close button text"
             type="button"

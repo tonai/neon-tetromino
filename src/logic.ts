@@ -203,9 +203,10 @@ Rune.initLogic({
             // Score
             if (result > 0) {
               playerState.clearedLines.push(result)
-              playerState.score += getScore(
-                result,
-                Math.floor(playerState.level)
+              playerState.score = Math.min(
+                playerState.score +
+                  getScore(result, Math.floor(playerState.level)),
+                999_999
               )
               // Level increase every 10 rows
               const level = Math.floor(playerState.level + result * 0.1)
@@ -267,7 +268,7 @@ Rune.initLogic({
             }
           }
         } else if (playerState.bottom) {
-          playerState.score += 1
+          playerState.score = Math.min(playerState.score + 1, 999_999)
         }
         playerState.speedCount = 0
       }
