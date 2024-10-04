@@ -136,7 +136,7 @@ Rune.initLogic({
     },
     setShowControls(showControls: boolean, { game, playerId }) {
       game.persisted[playerId].showControls = showControls
-    }
+    },
   },
   events: {
     playerJoined(playerId, { game }) {
@@ -159,7 +159,7 @@ Rune.initLogic({
       return
     }
     const entries = Object.entries(game.playersState)
-    // Check GameOver
+    // Check game over
     const nonGameOverPlayers = entries.filter(
       ([, playerState]) => !playerState.gameOver
     )
@@ -167,6 +167,19 @@ Rune.initLogic({
       (game.mode === Mode.BR && nonGameOverPlayers.length <= 1) ||
       (game.mode === Mode.ENDLESS && nonGameOverPlayers.length === 0)
     ) {
+      // High scores
+      for (const [id, playerState] of entries) {
+        let { highScores } = game.persisted[id]
+        if (!highScores) {
+          highScores = {}
+        }
+        const score = highScores![game.mode]
+        if (!score || score < playerState.score) {
+          highScores[game.mode] = playerState.score
+          game.persisted[id].highScores = highScores
+        }
+      }
+      // Game over
       Rune.gameOver({
         players: Object.fromEntries(
           entries.map(([id, playerState]) => [id, playerState.score])

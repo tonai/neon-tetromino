@@ -417,7 +417,7 @@ p {
   translate: -50% 0;
 }
 .avatar__lines {
-  position: absolute;
+  position: absolute !important;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -464,8 +464,11 @@ p {
 .start-screen__mode {
   position: relative;
 }
-.start-screen__help:hover {
-  scale: 1.1;
+.start-screen__score {
+  position: absolute;
+  top: 0;
+  right: 0;
+  translate: 0 -100%;
 }
 .start-screen__players {
   position: absolute;
@@ -510,6 +513,9 @@ p {
   text-shadow: 0 0 var(--size) #fff;
   transition: scale 400ms ease;
   scale: 1;
+}
+.tooltip__button:hover {
+  scale: 1.1;
 }
 .tooltip__content {
   position: absolute;

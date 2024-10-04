@@ -30,19 +30,23 @@ export const translations: Record<Locale, Record<string, string>> = {
     "move right": "move right",
     "speed up": "speed up",
     "Show controls regions": "Show controls regions",
+    "Best:": "Best:",
   },
   fr: {
     help: "aide",
     Endless: "Sans fin",
-    "[Endless]": "Jouez jusqu'à ce que vous ne puissiez plus placer de nouveaux blocs",
+    "[Endless]":
+      "Jouez jusqu'à ce que vous ne puissiez plus placer de nouveaux blocs",
     "Battle Royale": "Bataille Royale",
     "[Battle Royale]": "Essayez d'être le dernier debout",
-    "[help]": "Appuyez ou maintenez l'une des 4 régions pour déclencher l'action",
+    "[help]":
+      "Appuyez ou maintenez l'une des 4 régions pour déclencher l'action",
     "move left": "aller à gauche",
     rotate: "tourner",
     "move right": "aller à droite",
     "speed up": "accélerer",
     "Show controls regions": "Afficher les régions de contrôle",
+    "Best:": "Meilleur :",
   },
   ru: {
     help: "помощь",
@@ -50,12 +54,14 @@ export const translations: Record<Locale, Record<string, string>> = {
     "[Endless]": "Играйте до тех пор, пока не сможете размещать новые блоки.",
     "Battle Royale": "Королевская битва",
     "[Battle Royale]": "Постарайся остаться последним выжившим.",
-    "[help]": "Нажмите или удерживайте одну из 4 областей, чтобы запустить действие.",
+    "[help]":
+      "Нажмите или удерживайте одну из 4 областей, чтобы запустить действие.",
     "move left": "двигаться влево",
     rotate: "вращать",
     "move right": "двигаться вправо",
     "speed up": "ускорить",
     "Show controls regions": "Показать области управления",
+    "Best:": "Лучший:",
   },
   es: {
     help: "ayuda",
@@ -63,12 +69,14 @@ export const translations: Record<Locale, Record<string, string>> = {
     "[Endless]": "Juega hasta que no puedas colocar nuevos bloques",
     "Battle Royale": "Batalla real",
     "[Battle Royale]": "Intenta ser el último en pie",
-    "[help]": "Toque o mantenga presionada una de las 4 regiones para activar la acción.",
+    "[help]":
+      "Toque o mantenga presionada una de las 4 regiones para activar la acción.",
     "move left": "moverse a la izquierda",
     rotate: "girar",
     "move right": "moverse a la derecha",
     "speed up": "acelerar",
     "Show controls regions": "Mostrar regiones de control",
+    "Best:": "Mejor:",
   },
   pt: {
     help: "ajuda",
@@ -76,12 +84,14 @@ export const translations: Record<Locale, Record<string, string>> = {
     "[Endless]": "Jogue até não conseguir colocar novos blocos",
     "Battle Royale": "Batalha real",
     "[Battle Royale]": "Tente ser o último sobrevivente",
-    "[help]": "Toque ou mantenha pressionada uma das 4 regiões para acionar a ação",
+    "[help]":
+      "Toque ou mantenha pressionada uma das 4 regiões para acionar a ação",
     "move left": "deslocar para a esquerda",
     rotate: "girar",
     "move right": "deslocar para a direita",
     "speed up": "acelerar",
     "Show controls regions": "Mostrar regiões de controlos",
+    "Best:": "Melhor:",
   },
   cn: {
     help: "帮助",
@@ -95,5 +105,6 @@ export const translations: Record<Locale, Record<string, string>> = {
     "move right": "向右移动",
     "speed up": "加快",
     "Show controls regions": "显示控制区域",
+    "Best:": "最佳成绩：",
   },
 }

@@ -59,8 +59,9 @@ type GameActions = {
 }
 
 export type Persisted = {
-  locale: string
-  showControls: boolean
+  highScores?: Partial<Record<Mode, number>>
+  locale?: string
+  showControls?: boolean
 }
 
 declare global {

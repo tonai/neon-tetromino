@@ -70,7 +70,12 @@ export default function App() {
       {game.step === Step.WAIT && (
         <>
           <Background />
-          <StartScreen players={game.playerIds} t={t} votes={game.votes} />
+          <StartScreen
+            persisted={game?.persisted[yourPlayerId]}
+            players={game.playerIds}
+            t={t}
+            votes={game.votes}
+          />
         </>
       )}
       {game.step === Step.PLAY && (
