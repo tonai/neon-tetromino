@@ -1,3 +1,4 @@
+import { GameStateWithPersisted, PlayerId } from "rune-sdk"
 import {
   generateId,
   randomInArray,
@@ -5,7 +6,15 @@ import {
   unusedRandomInt,
 } from "@tonai/game-utils/server"
 
-import { Block, BlockType, GarbageType, PlayerState, Well } from "../types"
+import {
+  Block,
+  BlockType,
+  GameState,
+  GarbageType,
+  Persisted,
+  PlayerState,
+  Well,
+} from "../types"
 import { tetrominos } from "../constants"
 
 const types = Object.keys(BlockType) as (keyof typeof BlockType)[]
@@ -180,4 +189,20 @@ export function addGarbage(well: Well, rows: number[]): boolean {
     }
   }
   return out
+}
+
+export function saveHighScore(
+  game: GameStateWithPersisted<GameState, Persisted>,
+  id: PlayerId,
+  score: number
+) {
+  let { highScores } = game.persisted[id]
+  if (!highScores) {
+    highScores = {}
+  }
+  const prevScore = highScores![game.mode]
+  if (!prevScore || prevScore < score) {
+    highScores[game.mode] = score
+    game.persisted[id].highScores = highScores
+  }
 }

@@ -11,6 +11,7 @@ import {
   moveRight,
   placeBlock,
   rotate,
+  saveHighScore,
 } from "./logic/utils"
 import { Mode, Step } from "./types"
 
@@ -147,10 +148,15 @@ Rune.initLogic({
       }
     },
     playerLeft(playerId, { game }) {
-      if (game.step === Step.WAIT) {
-        game.playerIds.splice(game.playerIds.indexOf(playerId), 1)
-      } else {
-        // If a player left during the game (TODO)
+      game.playerIds.splice(game.playerIds.indexOf(playerId), 1)
+      if (game.step !== Step.WAIT) {
+        // Save high score
+        saveHighScore(game, playerId, game.playersState[playerId].score)
+        // Clear
+        game.playersGarbage = game.playersGarbage.filter(
+          ({ id }) => id !== playerId
+        )
+        delete game.playersState[playerId]
       }
     },
   },
@@ -169,15 +175,7 @@ Rune.initLogic({
     ) {
       // High scores
       for (const [id, playerState] of entries) {
-        let { highScores } = game.persisted[id]
-        if (!highScores) {
-          highScores = {}
-        }
-        const score = highScores![game.mode]
-        if (!score || score < playerState.score) {
-          highScores[game.mode] = playerState.score
-          game.persisted[id].highScores = highScores
-        }
+        saveHighScore(game, id, playerState.score)
       }
       // Game over
       Rune.gameOver({

@@ -467,7 +467,7 @@ p {
 .start-screen__score {
   position: absolute;
   top: 0;
-  right: 0;
+  right: calc((100% - 100vw + (var(--size) * 20)) / 2);
   translate: 0 -100%;
 }
 .start-screen__players {
