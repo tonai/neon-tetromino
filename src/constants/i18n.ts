@@ -31,6 +31,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "speed up": "speed up",
     "Show controls regions": "Show controls regions",
     "Best:": "Best:",
+    "You are spectating": "You are spectating",
   },
   fr: {
     help: "aide",
@@ -47,6 +48,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "speed up": "accélerer",
     "Show controls regions": "Afficher les régions de contrôle",
     "Best:": "Meilleur :",
+    "You are spectating": "Vous êtes spectateur",
   },
   ru: {
     help: "помощь",
@@ -62,6 +64,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "speed up": "ускорить",
     "Show controls regions": "Показать области управления",
     "Best:": "Лучший:",
+    "You are spectating": "Вы наблюдаете",
   },
   es: {
     help: "ayuda",
@@ -77,6 +80,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "speed up": "acelerar",
     "Show controls regions": "Mostrar regiones de control",
     "Best:": "Mejor:",
+    "You are spectating": "Estás observando",
   },
   pt: {
     help: "ajuda",
@@ -92,6 +96,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "speed up": "acelerar",
     "Show controls regions": "Mostrar regiões de controlos",
     "Best:": "Melhor:",
+    "You are spectating": "Você está a assistir",
   },
   cn: {
     help: "帮助",
@@ -106,5 +111,6 @@ export const translations: Record<Locale, Record<string, string>> = {
     "speed up": "加快",
     "Show controls regions": "显示控制区域",
     "Best:": "最佳成绩：",
+    "You are spectating": "您正在观看",
   },
 }

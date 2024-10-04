@@ -14,7 +14,7 @@ function getBlock(tetromino: number[][]) {
           key={`${i}-${j}`}
           className="block__cell"
           style={{
-            translate: `calc(var(--block) * ${j}) calc(var(--block) * ${i}) 0px`,
+            translate: `calc(var(--block) * ${j} * var(--factor)) calc(var(--block) * ${i} * var(--factor)) 0px`,
           }}
         />
       ) : null
@@ -29,13 +29,13 @@ export default function Block(props: IBlockProps) {
   const classNames = ["block", `block--${key}`]
   const style = {
     "--color": type,
-    width: `calc(var(--block) * ${matrix[0].length})`,
-    height: `calc(var(--block) * ${matrix.filter((line) => line.some((cell) => cell)).length})`,
+    width: `calc(var(--block) * ${matrix[0].length} * var(--factor))`,
+    height: `calc(var(--block) * ${matrix.filter((line) => line.some((cell) => cell)).length} * var(--factor))`,
   } as CSSProperties
 
   if (position) {
     classNames.push("block--falling")
-    style.translate = `calc(var(--block) * ${column}) calc(var(--block) * ${row - 2})`
+    style.translate = `calc(var(--block) * ${column} * var(--factor)) calc(var(--block) * ${row - 2} * var(--factor))`
   }
   return (
     <div className={classNames.join(" ")} style={style}>

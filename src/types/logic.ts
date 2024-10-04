@@ -40,6 +40,7 @@ export interface GameState {
   playerIds: PlayerId[]
   playersGarbage: PlayerGarbage[]
   playersState: Record<PlayerId, PlayerState>
+  spectators: PlayerId[]
   step: Step
   votes: Record<PlayerId, Mode | undefined>
 }

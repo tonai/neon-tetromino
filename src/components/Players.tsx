@@ -8,12 +8,14 @@ interface IPlayersProps {
 
 export default function Players(props: IPlayersProps) {
   const { game } = props
-  const { playerIds, playersState } = game
+  const { playerIds, playersState, spectators } = game
   return (
     <div className="players">
-      {playerIds.map((id) => (
-        <Player key={id} id={id} playerState={playersState[id]} />
-      ))}
+      {playerIds
+        .filter((id) => !spectators.includes(id))
+        .map((id) => (
+          <Player key={id} id={id} playerState={playersState[id]} />
+        ))}
     </div>
   )
 }

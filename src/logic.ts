@@ -27,6 +27,7 @@ Rune.initLogic({
     playerIds: allPlayerIds,
     playersGarbage: [],
     playersState: {},
+    spectators: [],
     step: Step.WAIT,
     votes: {},
   }),
@@ -141,22 +142,26 @@ Rune.initLogic({
   },
   events: {
     playerJoined(playerId, { game }) {
-      if (game.step === Step.WAIT) {
-        game.playerIds.push(playerId)
-      } else {
-        // Spectator (TODO)
+      game.playerIds.push(playerId)
+      if (game.step !== Step.WAIT) {
+        // Spectator
+        game.spectators.push(playerId)
       }
     },
     playerLeft(playerId, { game }) {
       game.playerIds.splice(game.playerIds.indexOf(playerId), 1)
       if (game.step !== Step.WAIT) {
-        // Save high score
-        saveHighScore(game, playerId, game.playersState[playerId].score)
-        // Clear
-        game.playersGarbage = game.playersGarbage.filter(
-          ({ id }) => id !== playerId
-        )
-        delete game.playersState[playerId]
+        if (!game.spectators.includes(playerId)) {
+          // Save high score
+          saveHighScore(game, playerId, game.playersState[playerId].score)
+          // Clear
+          game.playersGarbage = game.playersGarbage.filter(
+            ({ id }) => id !== playerId
+          )
+          delete game.playersState[playerId]
+        } else {
+          game.spectators.splice(game.spectators.indexOf(playerId), 1)
+        }
       }
     },
   },
@@ -180,7 +185,7 @@ Rune.initLogic({
       // Game over
       Rune.gameOver({
         players: Object.fromEntries(
-          entries.map(([id, playerState]) => [id, playerState.score])
+          game.playerIds.map((id) => [id, game.playersState[id]?.score ?? 0])
         ),
       })
     }

@@ -3,14 +3,22 @@ import { PlayerState } from "../types"
 import Block from "./Block"
 
 interface IWellProps {
+  factor?: number
   playerState: PlayerState
 }
 
 export default function Well(props: IWellProps) {
-  const { playerState } = props
+  const { factor = 1, playerState } = props
   const { block, well } = playerState
   return (
-    <div className="well">
+    <div
+      className="well"
+      style={
+        {
+          "--factor": factor,
+        } as CSSProperties
+      }
+    >
       {well.map((line, i) =>
         line.map((cell, j) =>
           cell ? (
@@ -20,8 +28,8 @@ export default function Well(props: IWellProps) {
               style={
                 {
                   "--color": cell,
-                  top: `calc(var(--block) * ${i - 2})`,
-                  left: `calc(var(--block) * ${j})`,
+                  top: `calc(var(--block) * ${i - 2} * var(--factor))`,
+                  left: `calc(var(--block) * ${j} * var(--factor))`,
                 } as CSSProperties
               }
             />

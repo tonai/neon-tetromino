@@ -10,6 +10,7 @@ import Help from "./Help.tsx"
 import Game from "./Game.tsx"
 import Players from "./Players.tsx"
 import Settings from "./Settings.tsx"
+import Spectator from "./Spectator.tsx"
 import StartScreen from "./StartScreen.tsx"
 import Sun from "./Sun.tsx"
 
@@ -59,7 +60,7 @@ export default function App() {
     }
   }, [game?.persisted, yourPlayerId])
 
-  if (!game || !yourPlayerId) {
+  if (!game) {
     // Rune only shows your game after an onChange() so no need for loading screen
     return
   }
@@ -67,44 +68,51 @@ export default function App() {
   return (
     <>
       <Sun />
-      {game.step === Step.WAIT && (
+      {yourPlayerId && !game.spectators.includes(yourPlayerId) && (
         <>
-          <Background />
-          <StartScreen
-            persisted={game?.persisted[yourPlayerId]}
-            players={game.playerIds}
+          {game.step === Step.WAIT && (
+            <>
+              <Background />
+              <StartScreen
+                persisted={game?.persisted[yourPlayerId]}
+                players={game.playerIds}
+                t={t}
+                votes={game.votes}
+              />
+            </>
+          )}
+          {game.step === Step.PLAY && (
+            <>
+              <Players game={game} />
+              <Game
+                game={game}
+                playerId={yourPlayerId}
+                showControls={showControls}
+              />
+            </>
+          )}
+          <Settings
+            close={closeSettings}
+            locale={locale}
+            open={openSettings}
+            opened={settingsOpen}
+            setLocale={setLocale}
+            setShowControls={setShowControls}
+            showControls={showControls}
             t={t}
-            votes={game.votes}
+          />
+          <Help
+            close={() => setHelpOpen(false)}
+            open={() => setHelpOpen(true)}
+            opened={helpOpen}
+            t={t}
           />
         </>
       )}
-      {game.step === Step.PLAY && (
-        <>
-          <Players game={game} />
-          <Game
-            game={game}
-            playerId={yourPlayerId}
-            showControls={showControls}
-          />
-        </>
+      {(!yourPlayerId || game.spectators.includes(yourPlayerId)) && (
+        <Spectator game={game} t={t} />
       )}
       <div className="background__grid"></div>
-      <Settings
-        close={closeSettings}
-        locale={locale}
-        open={openSettings}
-        opened={settingsOpen}
-        setLocale={setLocale}
-        setShowControls={setShowControls}
-        showControls={showControls}
-        t={t}
-      />
-      <Help
-        close={() => setHelpOpen(false)}
-        open={() => setHelpOpen(true)}
-        opened={helpOpen}
-        t={t}
-      />
     </>
   )
 }
