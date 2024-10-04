@@ -54,8 +54,15 @@ type GameActions = {
   ready: (vote: Mode) => void
   rightDown: () => void
   rightUp: () => void
+  setLocale: (locale: string) => void
+  setShowControls: (showControls: boolean) => void
+}
+
+export type Persisted = {
+  locale: string
+  showControls: boolean
 }
 
 declare global {
-  const Rune: RuneClient<GameState, GameActions>
+  const Rune: RuneClient<GameState, GameActions, Persisted>
 }

@@ -2,6 +2,7 @@ import { MouseEvent, useEffect } from "react"
 
 import Gear from "../icons/Gear"
 import { Locale, locales } from "../constants/i18n"
+
 import Switch from "./Switch"
 
 interface ISettingsProps {
@@ -38,6 +39,18 @@ export default function Settings(props: ISettingsProps) {
     }
   }, [opened, close])
 
+  function handleLocale(locale: Locale) {
+    return () => {
+      setLocale(locale)
+      Rune.actions.setLocale(locale)
+    }
+  }
+
+  function handleShowControls(showControls: boolean) {
+    setShowControls(showControls)
+    Rune.actions.setShowControls(showControls)
+  }
+
   function stop(event: MouseEvent) {
     event.stopPropagation()
   }
@@ -71,7 +84,7 @@ export default function Settings(props: ISettingsProps) {
                 <button
                   className={classNames.join(" ")}
                   type="button"
-                  onClick={() => setLocale(locale)}
+                  onClick={handleLocale(locale)}
                 >
                   <Component />
                 </button>
@@ -82,7 +95,7 @@ export default function Settings(props: ISettingsProps) {
         <div className="settings__controls">
           <Switch
             label={t("Show controls regions")}
-            onChange={setShowControls}
+            onChange={handleShowControls}
             value={showControls}
           />
         </div>

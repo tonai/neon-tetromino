@@ -1,9 +1,9 @@
 import { MouseEvent, useCallback, useEffect, useState } from "react"
-import { PlayerId } from "rune-sdk"
+import { GameStateWithPersisted, PlayerId } from "rune-sdk"
 import { createTranslator } from "@tonai/game-utils"
 
-import { Locale, translations } from "../constants/i18n"
-import { GameState, Step } from "../types"
+import { Locale, locales, translations } from "../constants/i18n"
+import { GameState, Persisted, Step } from "../types"
 
 import Background from "./Background.tsx"
 import Help from "./Help.tsx"
@@ -16,11 +16,15 @@ import Sun from "./Sun.tsx"
 export const translator = createTranslator(translations)
 
 export default function App() {
-  const [game, setGame] = useState<GameState>()
+  const [game, setGame] =
+    useState<GameStateWithPersisted<GameState, Persisted>>()
   const [yourPlayerId, setYourPlayerId] = useState<PlayerId | undefined>()
   const [helpOpen, setHelpOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
-  const [locale, setLocale] = useState<Locale>("en")
+  const [locale, setLocale] = useState<Locale>(() => {
+    const language = navigator.language.split("-")[0]
+    return language in locales ? language : "en"
+  })
   const [showControls, setShowControls] = useState(false)
 
   const closeSettings = useCallback(() => {
@@ -45,6 +49,15 @@ export default function App() {
       },
     })
   }, [])
+
+  useEffect(() => {
+    if (yourPlayerId && game?.persisted[yourPlayerId]?.locale) {
+      setLocale(game?.persisted[yourPlayerId]?.locale)
+    }
+    if (yourPlayerId && game?.persisted[yourPlayerId]?.showControls) {
+      setShowControls(game?.persisted[yourPlayerId]?.showControls)
+    }
+  }, [game?.persisted, yourPlayerId])
 
   if (!game || !yourPlayerId) {
     // Rune only shows your game after an onChange() so no need for loading screen

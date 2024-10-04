@@ -19,6 +19,7 @@ const updatesPerSecond = 10
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 6,
+  persistPlayerData: true,
   updatesPerSecond,
   setup: (allPlayerIds) => ({
     mode: Mode.ENDLESS,
@@ -130,6 +131,12 @@ Rune.initLogic({
       playerState.right = false
       playerState.actionSpeedCount = 0
     },
+    setLocale(locale: string, { game, playerId }) {
+      game.persisted[playerId].locale = locale
+    },
+    setShowControls(showControls: boolean, { game, playerId }) {
+      game.persisted[playerId].showControls = showControls
+    }
   },
   events: {
     playerJoined(playerId, { game }) {
