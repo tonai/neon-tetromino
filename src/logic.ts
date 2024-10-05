@@ -27,7 +27,9 @@ Rune.initLogic({
     mode: Mode.ENDLESS,
     playerIds: allPlayerIds,
     playersGarbage: [],
+    playersRenderState: {},
     playersState: {},
+    playersUiState: {},
     spectators: [],
     step: Step.WAIT,
     votes: {},
@@ -55,7 +57,8 @@ Rune.initLogic({
         return Rune.invalidAction()
       }
       const playerState = game.playersState[playerId]
-      rotate(playerState)
+      const renderState = game.playersRenderState[playerId]
+      rotate(renderState)
       // Reset
       reset(playerState)
       // Hold
@@ -74,7 +77,8 @@ Rune.initLogic({
         return Rune.invalidAction()
       }
       const playerState = game.playersState[playerId]
-      moveLeft(playerState)
+      const renderState = game.playersRenderState[playerId]
+      moveLeft(renderState)
       // Reset
       reset(playerState)
       // Hold
@@ -108,7 +112,8 @@ Rune.initLogic({
         return Rune.invalidAction()
       }
       const playerState = game.playersState[playerId]
-      moveRight(playerState)
+      const renderState = game.playersRenderState[playerId]
+      moveRight(renderState)
       // Reset
       reset(playerState)
       // Hold
@@ -142,12 +147,14 @@ Rune.initLogic({
       if (game.step !== Step.WAIT) {
         if (!game.spectators.includes(playerId)) {
           // Save high score
-          saveHighScore(game, playerId, game.playersState[playerId].score)
+          saveHighScore(game, playerId, game.playersUiState[playerId].score)
           // Clear
           game.playersGarbage = game.playersGarbage.filter(
             ({ id }) => id !== playerId
           )
+          delete game.playersRenderState[playerId]
           delete game.playersState[playerId]
+          delete game.playersUiState[playerId]
         } else {
           game.spectators.splice(game.spectators.indexOf(playerId), 1)
         }
@@ -159,6 +166,7 @@ Rune.initLogic({
       return
     }
     const entries = Object.entries(game.playersState)
+    const uiEntries = Object.entries(game.playersUiState)
     // Check game over
     const nonGameOverPlayers = entries.filter(
       ([, playerState]) => !playerState.gameOver
@@ -168,13 +176,13 @@ Rune.initLogic({
       (game.mode === Mode.ENDLESS && nonGameOverPlayers.length === 0)
     ) {
       // High scores
-      for (const [id, playerState] of entries) {
+      for (const [id, playerState] of uiEntries) {
         saveHighScore(game, id, playerState.score)
       }
       // Game over
       Rune.gameOver({
         players: Object.fromEntries(
-          game.playerIds.map((id) => [id, game.playersState[id]?.score ?? 0])
+          game.playerIds.map((id) => [id, game.playersUiState[id]?.score ?? 0])
         ),
       })
     }
@@ -183,6 +191,8 @@ Rune.initLogic({
       if (playerState.gameOver) {
         continue
       }
+      const uiState = game.playersUiState[playerId]
+      const renderState = game.playersRenderState[playerId]
       const speed = getSpeed(Math.floor(playerState.level))
       // Player controls
       if (playerState.center || playerState.left || playerState.right) {
@@ -192,11 +202,11 @@ Rune.initLogic({
           Math.min(playerState.actionSpeed, speed)
         ) {
           if (playerState.center) {
-            rotate(playerState)
+            rotate(renderState)
           } else if (playerState.left) {
-            moveLeft(playerState)
+            moveLeft(renderState)
           } else if (playerState.right) {
-            moveRight(playerState)
+            moveRight(renderState)
           }
           playerState.actionSpeedCount = 0
         }
@@ -204,7 +214,7 @@ Rune.initLogic({
       // Black fall
       playerState.speedCount++
       if (playerState.speedCount > speed || playerState.bottom) {
-        const { block, well } = playerState
+        const { block, well } = renderState
         block.row = block.row + 1
         if (!isValidMove(well, block)) {
           block.row = block.row - 1
@@ -216,10 +226,9 @@ Rune.initLogic({
             reset(playerState)
             // Score
             if (result > 0) {
-              playerState.clearedLines.push(result)
-              playerState.score = Math.min(
-                playerState.score +
-                  getScore(result, Math.floor(playerState.level)),
+              uiState.clearedLines.push(result)
+              uiState.score = Math.min(
+                uiState.score + getScore(result, Math.floor(playerState.level)),
                 999_999
               )
               // Level increase every 10 rows
@@ -231,11 +240,11 @@ Rune.initLogic({
               }
             }
             // Next block
-            const nextBlock = playerState.sequence.shift()!
-            playerState.block = nextBlock
-            if (playerState.sequence.length === 0) {
+            const nextBlock = renderState.sequence.shift()!
+            renderState.block = nextBlock
+            if (renderState.sequence.length === 0) {
               const sequence = getRandomSequence()
-              playerState.sequence = sequence
+              renderState.sequence = sequence
             }
             // Garbage
             if (game.mode === Mode.BR) {
@@ -282,7 +291,7 @@ Rune.initLogic({
             }
           }
         } else if (playerState.bottom) {
-          playerState.score = Math.min(playerState.score + 1, 999_999)
+          uiState.score = Math.min(uiState.score + 1, 999_999)
         }
         playerState.speedCount = 0
       }

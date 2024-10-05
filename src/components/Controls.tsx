@@ -1,10 +1,10 @@
 import { memo, useEffect, useRef } from "react"
 import { playSound } from "@tonai/game-utils"
 
-import { PlayerState } from "../types"
+import { PlayerRenderState } from "../types"
 
 interface IControlsProps {
-  playerState: PlayerState
+  renderState: PlayerRenderState
   showControls: boolean
 }
 
@@ -13,7 +13,7 @@ function areMatrixDifferent(m1: number[][], m2: number[][]) {
 }
 
 function Controls(props: IControlsProps) {
-  const { playerState, showControls } = props
+  const { renderState, showControls } = props
   const classNames = ["controls"]
   if (showControls) {
     classNames.push("controls--show")
@@ -59,22 +59,22 @@ function Controls(props: IControlsProps) {
     }
   }, [])
 
-  const matrix = useRef(playerState.block.matrix)
-  const id = useRef(playerState.block.id)
+  const matrix = useRef(renderState.block.matrix)
+  const id = useRef(renderState.block.id)
   useEffect(() => {
     if (
-      areMatrixDifferent(playerState.block.matrix, matrix.current) &&
-      playerState.block.id === id.current
+      areMatrixDifferent(renderState.block.matrix, matrix.current) &&
+      renderState.block.id === id.current
     ) {
       playSound("rotate")
-      matrix.current = playerState.block.matrix
+      matrix.current = renderState.block.matrix
     }
-  }, [playerState.block.matrix, playerState.block.id])
+  }, [renderState.block.matrix, renderState.block.id])
   useEffect(() => {
-    if (playerState.block.id !== id.current) {
-      id.current = playerState.block.id
+    if (renderState.block.id !== id.current) {
+      id.current = renderState.block.id
     }
-  }, [playerState.block.matrix, playerState.block.id])
+  }, [renderState.block.matrix, renderState.block.id])
 
   return (
     <div className={classNames.join(" ")}>

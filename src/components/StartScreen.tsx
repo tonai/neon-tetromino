@@ -1,3 +1,4 @@
+import { memo } from "react"
 import { minPlayers } from "../constants"
 import { Mode, Persisted } from "../types"
 
@@ -12,7 +13,7 @@ export interface IStartScreenProps {
   votes: Record<string, Mode | undefined>
 }
 
-export default function StartScreen(props: IStartScreenProps) {
+function StartScreen(props: IStartScreenProps) {
   const { persisted, players, t, votes } = props
   const playersByMode = Object.entries(votes).reduce<Record<Mode, string[]>>(
     (acc, [id, vote]) => {
@@ -60,3 +61,5 @@ export default function StartScreen(props: IStartScreenProps) {
     </div>
   )
 }
+
+export default memo(StartScreen)

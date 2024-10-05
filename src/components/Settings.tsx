@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect } from "react"
+import { memo, MouseEvent, useEffect } from "react"
 import { playSound } from "@tonai/game-utils"
 
 import Gear from "../icons/Gear"
@@ -17,7 +17,7 @@ interface ISettingsProps {
   t: (word: string) => string
 }
 
-export default function Settings(props: ISettingsProps) {
+function Settings(props: ISettingsProps) {
   const {
     close,
     locale: currentLocale,
@@ -106,3 +106,5 @@ export default function Settings(props: ISettingsProps) {
     </>
   )
 }
+
+export default memo(Settings)

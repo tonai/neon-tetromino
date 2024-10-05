@@ -1,4 +1,4 @@
-import { MouseEvent } from "react"
+import { memo, MouseEvent } from "react"
 
 import controls from "../assets/controls.png"
 
@@ -9,7 +9,7 @@ interface IHelpProps {
   t: (word: string) => string
 }
 
-export default function Help(props: IHelpProps) {
+function Help(props: IHelpProps) {
   const { close, open, opened, t } = props
   const classNames = ["modale"]
   if (opened) {
@@ -156,3 +156,5 @@ export default function Help(props: IHelpProps) {
     </>
   )
 }
+
+export default memo(Help)

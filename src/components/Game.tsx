@@ -20,23 +20,26 @@ function areArrayDifferent(a1: number[], a2: number[]) {
 
 export default function Game(props: IGameProps) {
   const { game, playerId, showControls } = props
-  const { playersState, playersGarbage } = game
+  const { playersGarbage, playersRenderState, playersState, playersUiState } =
+    game
   const playerState = playersState[playerId]
+  const renderState = playersRenderState[playerId]
+  const uiState = playersUiState[playerId]
   const playerGarbage = playersGarbage.find(({ id }) => id === playerId)
   const totalGarbage = createArray(
     playerGarbage?.rows.reduce((a, b) => a + b, 0) ?? 0
   )
 
-  const clearedLines = useRef(playerState.clearedLines)
+  const clearedLines = useRef(uiState.clearedLines)
   useEffect(() => {
     if (
-      areArrayDifferent(playerState.clearedLines, clearedLines.current) &&
-      playerState.clearedLines.length > 0
+      areArrayDifferent(uiState.clearedLines, clearedLines.current) &&
+      uiState.clearedLines.length > 0
     ) {
       playSound("clear")
-      clearedLines.current = playerState.clearedLines
+      clearedLines.current = uiState.clearedLines
     }
-  }, [playerState.clearedLines])
+  }, [uiState.clearedLines])
 
   useEffect(() => {
     if (playerState.gameOver) {
@@ -46,9 +49,9 @@ export default function Game(props: IGameProps) {
 
   return (
     <div className="game">
-      <Well playerState={playerState} />
+      <Well renderState={renderState} />
       <div className="game__column">
-        <NextBlock block={playerState.sequence[0]} />
+        <NextBlock block={renderState.sequence[0]} />
         <div className="game__garbages">
           {totalGarbage.map((_, i) => (
             <div key={i} className="game__garbage"></div>
@@ -56,7 +59,7 @@ export default function Game(props: IGameProps) {
         </div>
       </div>
       {!game.playersState[playerId].gameOver && (
-        <Controls playerState={playerState} showControls={showControls} />
+        <Controls renderState={renderState} showControls={showControls} />
       )}
     </div>
   )

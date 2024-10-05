@@ -1,6 +1,6 @@
-import { CSSProperties } from "react"
+import { CSSProperties, memo } from "react"
 
-export default function Background() {
+function Background() {
   return (
     <>
       <div className="background"></div>
@@ -41,3 +41,5 @@ export default function Background() {
     </>
   )
 }
+
+export default memo(Background)

@@ -1,15 +1,16 @@
-import { CSSProperties } from "react"
-import { PlayerState } from "../types"
+import { CSSProperties, memo } from "react"
+
+import { PlayerRenderState } from "../types"
 import Block from "./Block"
 
 interface IWellProps {
   factor?: number
-  playerState: PlayerState
+  renderState: PlayerRenderState
 }
 
-export default function Well(props: IWellProps) {
-  const { factor = 1, playerState } = props
-  const { block, well } = playerState
+function Well(props: IWellProps) {
+  const { factor = 1, renderState } = props
+  const { block, well } = renderState
   return (
     <div
       className="well"
@@ -40,3 +41,5 @@ export default function Well(props: IWellProps) {
     </div>
   )
 }
+
+export default memo(Well)

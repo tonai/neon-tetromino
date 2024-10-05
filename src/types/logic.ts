@@ -17,16 +17,22 @@ export interface PlayerState {
   actionSpeed: number // Number of frames before next action
   actionSpeedCount: number
   bottom: boolean
-  block: Block
   center: boolean
-  clearedLines: number[]
   gameOver: boolean
   left: boolean
   level: number
   right: boolean
-  score: number
-  sequence: Block[]
   speedCount: number
+}
+
+export interface PlayerUiState {
+  clearedLines: number[]
+  score: number
+}
+
+export interface PlayerRenderState {
+  block: Block
+  sequence: Block[]
   well: Well
 }
 
@@ -39,7 +45,9 @@ export interface GameState {
   mode: Mode
   playerIds: PlayerId[]
   playersGarbage: PlayerGarbage[]
+  playersRenderState: Record<PlayerId, PlayerRenderState>
   playersState: Record<PlayerId, PlayerState>
+  playersUiState: Record<PlayerId, PlayerUiState>
   spectators: PlayerId[]
   step: Step
   votes: Record<PlayerId, Mode | undefined>

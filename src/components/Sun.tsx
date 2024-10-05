@@ -1,4 +1,6 @@
-export default function Sun() {
+import { memo } from "react"
+
+function Sun() {
   return (
     <div className="sun">
       <div className="sun__face sun__front"></div>
@@ -10,3 +12,5 @@ export default function Sun() {
     </div>
   )
 }
+
+export default memo(Sun)

@@ -1,3 +1,5 @@
+import { memo } from "react"
+
 import { Block as IBlock } from "../types"
 
 import Block from "./Block"
@@ -6,7 +8,7 @@ interface INextBlockProps {
   block: IBlock
 }
 
-export default function NextBlock(props: INextBlockProps) {
+function NextBlock(props: INextBlockProps) {
   const { block } = props
   return (
     <div className="next-block">
@@ -14,3 +16,5 @@ export default function NextBlock(props: INextBlockProps) {
     </div>
   )
 }
+
+export default memo(NextBlock)

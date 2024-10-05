@@ -116,7 +116,11 @@ export default function App() {
           )}
           {game.step === Step.PLAY && (
             <>
-              <Players game={game} />
+              <Players
+                playerIds={game.playerIds}
+                playersUiState={game.playersUiState}
+                spectators={game.spectators}
+              />
               <Game
                 game={game}
                 playerId={yourPlayerId}
@@ -138,7 +142,13 @@ export default function App() {
         </>
       )}
       {(!yourPlayerId || game.spectators.includes(yourPlayerId)) && (
-        <Spectator game={game} t={t} />
+        <Spectator
+          playerIds={game.playerIds}
+          playersRenderState={game.playersRenderState}
+          playersUiState={game.playersUiState}
+          spectators={game.spectators}
+          t={t}
+        />
       )}
       <div className="background__grid"></div>
     </>

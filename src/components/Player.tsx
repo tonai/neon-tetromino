@@ -1,15 +1,16 @@
-import { PlayerState } from "../types"
+import { memo } from "react"
+import { PlayerUiState } from "../types"
 
 import Avatar from "./Avatar"
 
 interface IPlayerProps {
   id: string
-  playerState: PlayerState
+  uiState: PlayerUiState
 }
 
-export default function Player(props: IPlayerProps) {
-  const { id, playerState } = props
-  const { clearedLines, score } = playerState
+function Player(props: IPlayerProps) {
+  const { id, uiState } = props
+  const { clearedLines, score } = uiState
   return (
     <div className="player">
       <Avatar clearedLines={clearedLines} id={id} />
@@ -17,3 +18,5 @@ export default function Player(props: IPlayerProps) {
     </div>
   )
 }
+
+export default memo(Player)

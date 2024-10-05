@@ -12,6 +12,7 @@ import {
   GameState,
   GarbageType,
   Persisted,
+  PlayerRenderState,
   PlayerState,
   Well,
 } from "../types"
@@ -114,7 +115,7 @@ export function rotateMatrix(matrix: number[][]) {
   return result
 }
 
-export function rotate(playerState: PlayerState) {
+export function rotate(playerState: PlayerRenderState) {
   const { block, well } = playerState
   const matrix = rotateMatrix(block.matrix)
   if (isValidMove(well, { ...block, matrix })) {
@@ -122,7 +123,7 @@ export function rotate(playerState: PlayerState) {
   }
 }
 
-export function moveLeft(playerState: PlayerState) {
+export function moveLeft(playerState: PlayerRenderState) {
   const { block, well } = playerState
   const column = block.column - 1
   if (isValidMove(well, { ...block, column })) {
@@ -130,7 +131,7 @@ export function moveLeft(playerState: PlayerState) {
   }
 }
 
-export function moveRight(playerState: PlayerState) {
+export function moveRight(playerState: PlayerRenderState) {
   const { block, well } = playerState
   const column = block.column + 1
   if (isValidMove(well, { ...block, column })) {
