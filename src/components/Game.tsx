@@ -40,23 +40,6 @@ export default function Game(props: IGameProps) {
     }
   }, [playerState.gameOver])
 
-  const matrix = useRef(playerState.block.matrix)
-  const id = useRef(playerState.block.id)
-  useEffect(() => {
-    if (
-      playerState.block.matrix !== matrix.current &&
-      playerState.block.id === id.current
-    ) {
-      playSound("rotate")
-      matrix.current = playerState.block.matrix
-    }
-  }, [playerState.block.matrix, playerState.block.id])
-  useEffect(() => {
-    if (playerState.block.id !== id.current) {
-      id.current = playerState.block.id
-    }
-  }, [playerState.block.matrix, playerState.block.id])
-
   return (
     <div className="game">
       <Well playerState={playerState} />
@@ -69,7 +52,7 @@ export default function Game(props: IGameProps) {
         </div>
       </div>
       {!game.playersState[playerId].gameOver && (
-        <Controls showControls={showControls} />
+        <Controls playerState={playerState} showControls={showControls} />
       )}
     </div>
   )
