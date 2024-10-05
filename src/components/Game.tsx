@@ -14,6 +14,10 @@ export interface IGameProps {
   showControls: boolean
 }
 
+function areArrayDifferent(a1: number[], a2: number[]) {
+  return a1.some((item, i) => item !== a2[i])
+}
+
 export default function Game(props: IGameProps) {
   const { game, playerId, showControls } = props
   const { playersState, playersGarbage } = game
@@ -26,7 +30,7 @@ export default function Game(props: IGameProps) {
   const clearedLines = useRef(playerState.clearedLines)
   useEffect(() => {
     if (
-      playerState.clearedLines !== clearedLines.current &&
+      areArrayDifferent(playerState.clearedLines, clearedLines.current) &&
       playerState.clearedLines.length > 0
     ) {
       playSound("clear")

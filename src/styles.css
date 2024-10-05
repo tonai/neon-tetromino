@@ -1,9 +1,3 @@
-@property --shift {
-  syntax: "<number>";
-  inherits: false;
-  initial-value: 0;
-}
-
 /* latin-ext */
 @font-face {
   font-family: "Mr Dafoe";
@@ -61,6 +55,7 @@
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 :root {
   --size: min(1vw, 0.5vh);
@@ -126,15 +121,15 @@ p {
     #0d0221 0%,
     #45125e 15%,
     #a22561 30%,
-    #ff3864 40%,
-    transparent 40%
+    #ff3864 37%,
+    transparent 37%
   );
 }
 .background__stars {
   position: absolute;
   top: 0;
   right: 0;
-  bottom: 20%;
+  bottom: 80%;
   overflow: hidden;
   left: 0;
 }
@@ -234,49 +229,71 @@ p {
 }
 .background__grid {
   background: linear-gradient(
-      transparent 65%,
-      rgba(46, 38, 255, 0.4) 75%,
+      transparent 70%,
+      rgba(46, 38, 255, 0.4) 77%,
       #7d41e6 80%,
-      rgba(46, 38, 255, 0.4) 85%,
-      transparent 95%
+      rgba(46, 38, 255, 0.4) 83%,
+      transparent 90%
     ),
     linear-gradient(
       90deg,
-      transparent 65%,
-      rgba(46, 38, 255, 0.4) 75%,
+      transparent 70%,
+      rgba(46, 38, 255, 0.4) 77%,
       #7d41e6 80%,
-      rgba(46, 38, 255, 0.4) 85%,
-      transparent 95%
+      rgba(46, 38, 255, 0.4) 83%,
+      transparent 90%
     );
-  background-size: 30px 30px;
-  width: 200vw;
+  /* background: linear-gradient(
+      transparent 70%,
+      #7d41e6 74%,
+      white 76%,
+      white 84%,
+      #7d41e6 86%,
+      transparent 90%
+    ),
+    linear-gradient(
+      90deg,
+      transparent 70%,
+      #7d41e6 74%,
+      white 76%,
+      white 84%,
+      #7d41e6 86%,
+      transparent 90%
+    ); */
+  background-size: 10px 10px;
+  width: 100vw;
   height: 300vh;
   position: absolute;
-  bottom: -120vh;
-  transform: rotateX(-109deg);
-  -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 80%);
-  mask-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 80%);
-  animation: 200ms linear infinite both move;
+  bottom: 0vh;
+  transform: rotateX(75deg) translateZ(-90vh);
+  -webkit-mask-image: linear-gradient(
+    rgba(0, 0, 0, 0) 65%,
+    rgba(0, 0, 0, 1) 80%
+  );
+  mask-image: linear-gradient(rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 1) 80%);
+  animation: 400ms linear infinite both move;
+  /* filter: drop-shadow(0 0 1px #df7373); */
 }
 @keyframes move {
   0% {
-    background-position: 0 30px;
+    background-position: 0 0;
   }
   100% {
-    background-position: 0 0;
+    background-position: 0 10px;
   }
 }
 
 /* Sun */
 .sun {
   position: fixed;
-  top: 17%;
+  top: calc(var(--size) * 40);
   left: 50%;
   width: var(--sun-size);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   translate: -50% -50%;
   filter: drop-shadow(0 0 4rem var(--labs-sys-color-sun-glow));
+  overflow: hidden;
 }
 .sun__face {
   position: absolute;
@@ -287,74 +304,6 @@ p {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  --shift: 1;
-  -webkit-mask: linear-gradient(
-    to top,
-    #000 calc(1% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(8% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(10% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(16% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(19% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(24% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(28% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(32% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(37% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(40% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(46% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(48% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(55% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(56% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(56% + (2.5% * var(--shift)))
-  );
-  mask: linear-gradient(
-    to top,
-    #000 calc(1% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(8% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(10% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(16% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(19% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(24% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(28% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(32% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(37% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(40% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(46% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(48% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(55% + (3.5% * var(--shift))),
-    0%,
-    #0000 calc(56% + (2.8% * var(--shift))),
-    0%,
-    #000 calc(56% + (2.5% * var(--shift)))
-  );
-  -webkit-mask-size: 100% 120%;
-  mask-size: 100% 120%;
-  animation: sun calc(var(--base-speed) / 4) linear infinite;
   border-radius: inherit;
   background-image: linear-gradient(
     to bottom,
@@ -362,12 +311,55 @@ p {
     var(--labs-sys-color-sun-2) 60%
   );
 }
-@keyframes sun {
-  from {
-    --shift: 1;
+.sun__line {
+  height: 0;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(calc(var(--size) * 15));
+  animation: sunset 5s linear infinite;
+  animation-delay: 0s;
+}
+.sun__line:nth-child(3) {
+  animation-delay: -1s;
+}
+.sun__line:nth-child(4) {
+  animation-delay: -2s;
+}
+.sun__line:nth-child(5) {
+  animation-delay: -3s;
+}
+.sun__line:nth-child(6) {
+  animation-delay: -4s;
+}
+@keyframes sunset {
+  0% {
+    background: #6b3487;
+    height: 0;
+    transform: translateY(calc(var(--size) * 15));
+    opacity: 0;
   }
-  to {
-    --shift: 3.8;
+  10% {
+    opacity: 1;
+  }
+  20% {
+    background: #773789;
+  }
+  40% {
+    background: #83398a;
+  }
+  60% {
+    background: #8d3b8a;
+  }
+  80% {
+    background: #983e8b;
+  }
+  100% {
+    background: #a4418e;
+    height: calc(var(--size) * 3);
+    transform: translateY(calc(var(--size) * 40));
   }
 }
 
@@ -514,6 +506,9 @@ p {
     0 0 var(--size) #fff,
     inset 0 0 var(--size) #fff;
   text-shadow: 0 0 var(--size) #fff;
+  position: relative;
+  z-index: 1;
+  tranform: translateZ(0);
   transition: scale 400ms ease;
   scale: 1;
 }
@@ -530,6 +525,8 @@ p {
   translate: 0 -100%;
   padding: calc(var(--size) * 2);
   transform-origin: bottom left;
+  z-index: 2;
+  tranform: translateZ(0);
   transition:
     scale 400ms ease,
     opacity 400ms ease;
@@ -550,7 +547,7 @@ p {
   position: absolute !important;
   top: 0%;
   font-family: var(--font-exo);
-  font-size: calc(var(--size) * 17);
+  font-size: calc(var(--size) * 16);
 }
 .title__sub-title {
   position: relative;
@@ -878,37 +875,102 @@ p {
 .help__controls--left {
   top: 44%;
   left: -10%;
-  text-shadow:
-    0 0 0.05em #fff,
-    0 0 0.2em var(--control-left),
-    0 0 0.3em var(--control-left) !important;
   transform-origin: 0 50%;
+  animation: controls--left 1.7s infinite alternate;
+}
+@keyframes controls--left {
+  0%,
+  18%,
+  22%,
+  26%,
+  58%,
+  62%,
+  100% {
+    text-shadow:
+      0 0 0.05em #fff,
+      0 0 0.2em var(--control-left),
+      0 0 0.3em var(--control-left);
+  }
+  20%,
+  24%,
+  60% {
+    text-shadow: none;
+  }
 }
 .help__controls--center {
   top: 15%;
   left: 50%;
   translate: -50% 0;
-  text-shadow:
-    0 0 0.05em #fff,
-    0 0 0.2em var(--control-center),
-    0 0 0.3em var(--control-center) !important;
+  animation: controls--center 1.5s infinite alternate;
+}
+@keyframes controls--center {
+  0%,
+  50%,
+  54%,
+  58%,
+  62%,
+  100% {
+    text-shadow:
+      0 0 0.05em #fff,
+      0 0 0.2em var(--control-center),
+      0 0 0.3em var(--control-center);
+  }
+  52%,
+  56%,
+  60% {
+    text-shadow: none;
+  }
 }
 .help__controls--right {
   top: 66%;
   right: -8%;
-  text-shadow:
-    0 0 0.05em #fff,
-    0 0 0.2em var(--control-right),
-    0 0 0.3em var(--control-right) !important;
   transform-origin: 100% 50%;
+  animation: controls--right 2s infinite alternate;
+}
+@keyframes controls--right {
+  0%,
+  38%,
+  42%,
+  46%,
+  58%,
+  62%,
+  100% {
+    text-shadow:
+      0 0 0.05em #fff,
+      0 0 0.2em var(--control-right),
+      0 0 0.3em var(--control-right);
+  }
+  40%,
+  44%,
+  60% {
+    text-shadow: none;
+  }
 }
 .help__controls--bottom {
   bottom: -2%;
   left: 28%;
-  text-shadow:
-    0 0 0.05em #fff,
-    0 0 0.2em var(--control-bottom),
-    0 0 0.3em var(--control-bottom) !important;
+  animation: controls--bottom 3s infinite alternate;
+}
+@keyframes controls--bottom {
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  59%,
+  61%,
+  100% {
+    text-shadow:
+      0 0 0.05em #fff,
+      0 0 0.2em var(--control-bottom),
+      0 0 0.3em var(--control-bottom);
+  }
+  20%,
+  22%,
+  24%,
+  60% {
+    text-shadow: none;
+  }
 }
 .help__defs {
   width: 0;
@@ -922,33 +984,98 @@ p {
   top: 43%;
   left: -12%;
   width: calc(var(--size) * 40);
-  filter: drop-shadow(0 0 0.05em #fff)
-    drop-shadow(0 0 0.2em var(--control-left))
-    drop-shadow(0 0 0.3em var(--control-left));
+  animation: arrow--left 1.7s infinite alternate;
+}
+@keyframes arrow--left {
+  0%,
+  18%,
+  22%,
+  26%,
+  58%,
+  62%,
+  100% {
+    filter: drop-shadow(0 0 0.05em #fff)
+      drop-shadow(0 0 0.2em var(--control-left))
+      drop-shadow(0 0 0.3em var(--control-left));
+  }
+  20%,
+  24%,
+  60% {
+    filter: none;
+  }
 }
 .help__arrow--center {
   top: 17%;
   left: 40%;
   width: calc(var(--size) * 40);
-  filter: drop-shadow(0 0 0.05em #fff)
-    drop-shadow(0 0 0.2em var(--control-center))
-    drop-shadow(0 0 0.3em var(--control-center));
+  animation: arrow--center 1.5s infinite alternate;
+}
+@keyframes arrow--center {
+  0%,
+  50%,
+  54%,
+  58%,
+  62%,
+  100% {
+    filter: drop-shadow(0 0 0.05em #fff)
+      drop-shadow(0 0 0.2em var(--control-center))
+      drop-shadow(0 0 0.3em var(--control-center));
+  }
+  52%,
+  56%,
+  60% {
+    filter: none;
+  }
 }
 .help__arrow--right {
   top: 53%;
   right: -17%;
   width: calc(var(--size) * 40);
-  filter: drop-shadow(0 0 0.05em #fff)
-    drop-shadow(0 0 0.2em var(--control-right))
-    drop-shadow(0 0 0.3em var(--control-right));
+  animation: arrow--right 2s infinite alternate;
+}
+@keyframes arrow--right {
+  0%,
+  38%,
+  42%,
+  46%,
+  58%,
+  62%,
+  100% {
+    filter: drop-shadow(0 0 0.05em #fff)
+      drop-shadow(0 0 0.2em var(--control-right))
+      drop-shadow(0 0 0.3em var(--control-right));
+  }
+  40%,
+  44%,
+  60% {
+    filter: none;
+  }
 }
 .help__arrow--bottom {
   bottom: -7%;
   left: 0%;
   width: calc(var(--size) * 40);
-  filter: drop-shadow(0 0 0.05em #fff)
-    drop-shadow(0 0 0.2em var(--control-bottom))
-    drop-shadow(0 0 0.3em var(--control-bottom));
+  animation: arrow--bottom 3s infinite alternate;
+}
+@keyframes arrow--bottom {
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  59%,
+  61%,
+  100% {
+    filter: drop-shadow(0 0 0.05em #fff)
+      drop-shadow(0 0 0.2em var(--control-bottom))
+      drop-shadow(0 0 0.3em var(--control-bottom));
+  }
+  20%,
+  22%,
+  24%,
+  60% {
+    filter: none;
+  }
 }
 
 /* Spectator */
@@ -1031,6 +1158,7 @@ p {
   opacity: 0;
   pointer-events: none;
   transition: opacity 400ms ease;
+  transform: translateZ(0);
 }
 .modale__inside {
   margin: 10%;
@@ -1038,6 +1166,9 @@ p {
   position: relative;
   translate: 100% 0;
   transition: translate 400ms ease;
+  position: rlative;
+  z-index: 1;
+  transform: translateZ(0);
   padding: 0 calc(var(--size) * 8);
 }
 .modale__close {
@@ -1072,7 +1203,8 @@ p {
     0 0 20px rgba(0, 255, 255, 0.7);
   position: relative;
   overflow: hidden;
-  -webkit-text-stroke: 0.06em rgba(0, 0, 0, 0.5);
+  -webkit-text-stroke: 0.1em rgba(0, 0, 0, 0.5);
+  paint-order: stroke fill;
   z-index: 1;
   transform: translateZ(0);
 }
@@ -1094,6 +1226,7 @@ p {
   inset: 0;
   background-image: var(--reflect-gradient);
   -webkit-text-stroke: 0.01em #94a0b9;
+  paint-order: stroke fill;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1101,10 +1234,11 @@ p {
 }
 .reflect__back {
   text-shadow:
-    0 0 0.1em #8ba2d0,
-    0 0 0.2em black,
-    0 0 5em #165ff3;
+    0 0 var(--size) #8ba2d0,
+    0 0 calc(var(--size) * 4) black,
+    0 0 calc(var(--size) * 10) #165ff3;
   -webkit-text-stroke: 0.06em rgba(0, 0, 0, 0.5);
+  height: 5em;
 }
 .text {
   color: #fff;

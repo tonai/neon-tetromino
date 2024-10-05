@@ -206,3 +206,10 @@ export function saveHighScore(
     game.persisted[id].highScores = highScores
   }
 }
+
+export function reset(playerState: PlayerState) {
+  playerState.bottom = false
+  playerState.center = false
+  playerState.left = false
+  playerState.right = false
+}

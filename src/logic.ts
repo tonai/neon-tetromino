@@ -10,6 +10,7 @@ import {
   moveLeft,
   moveRight,
   placeBlock,
+  reset,
   rotate,
   saveHighScore,
 } from "./logic/utils"
@@ -38,10 +39,7 @@ Rune.initLogic({
       }
       const playerState = game.playersState[playerId]
       // Reset
-      playerState.bottom = false
-      playerState.center = false
-      playerState.left = false
-      playerState.right = false
+      reset(playerState)
       // Hold
       playerState.bottom = true
     },
@@ -59,10 +57,7 @@ Rune.initLogic({
       const playerState = game.playersState[playerId]
       rotate(playerState)
       // Reset
-      playerState.bottom = false
-      playerState.center = false
-      playerState.left = false
-      playerState.right = false
+      reset(playerState)
       // Hold
       playerState.center = true
     },
@@ -81,10 +76,7 @@ Rune.initLogic({
       const playerState = game.playersState[playerId]
       moveLeft(playerState)
       // Reset
-      playerState.bottom = false
-      playerState.center = false
-      playerState.left = false
-      playerState.right = false
+      reset(playerState)
       // Hold
       playerState.left = true
     },
@@ -118,10 +110,7 @@ Rune.initLogic({
       const playerState = game.playersState[playerId]
       moveRight(playerState)
       // Reset
-      playerState.bottom = false
-      playerState.center = false
-      playerState.left = false
-      playerState.right = false
+      reset(playerState)
       // Hold
       playerState.right = true
     },
@@ -223,6 +212,8 @@ Rune.initLogic({
           if (result === true) {
             playerState.gameOver = true
           } else {
+            // Sometimes block continue to fall quickly so reset when block is placed
+            reset(playerState)
             // Score
             if (result > 0) {
               playerState.clearedLines.push(result)
