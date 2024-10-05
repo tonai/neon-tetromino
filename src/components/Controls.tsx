@@ -8,6 +8,7 @@ export default function Controls(props: IControlsProps) {
   if (showControls) {
     classNames.push("controls--show")
   }
+
   return (
     <div className={classNames.join(" ")}>
       <button

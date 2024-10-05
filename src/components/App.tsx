@@ -1,6 +1,11 @@
 import { MouseEvent, useCallback, useEffect, useState } from "react"
 import { GameStateWithPersisted, PlayerId } from "rune-sdk"
-import { createTranslator } from "@tonai/game-utils"
+import {
+  createTranslator,
+  initSounds,
+  playSequence,
+  playSound,
+} from "@tonai/game-utils"
 
 import { Locale, locales, translations } from "../constants/i18n"
 import { GameState, Persisted, Step } from "../types"
@@ -15,6 +20,17 @@ import StartScreen from "./StartScreen.tsx"
 import Sun from "./Sun.tsx"
 
 export const translator = createTranslator(translations)
+initSounds({
+  button: "sound/button.mp3",
+  clear: "sound/clear.mp3",
+  close: "sound/close.mp3",
+  intro: "sound/intro.mp3",
+  lost: "sound/lost.mp3",
+  mainLoop: "sound/mainLoop.mp3",
+  open: "sound/open.mp3",
+  rotate: "sound/rotate.mp3",
+  select: "sound/select.mp3",
+})
 
 export default function App() {
   const [game, setGame] =
@@ -29,11 +45,21 @@ export default function App() {
   const [showControls, setShowControls] = useState(false)
 
   const closeSettings = useCallback(() => {
+    playSound("close")
     setSettingsOpen(false)
   }, [])
   const openSettings = useCallback((event: MouseEvent) => {
+    playSound("open")
     event.stopPropagation()
     setSettingsOpen(true)
+  }, [])
+  const closeHelp = useCallback(() => {
+    playSound("close")
+    setHelpOpen(false)
+  }, [])
+  const openHelp = useCallback(() => {
+    playSound("open")
+    setHelpOpen(true)
   }, [])
   const t = useCallback(
     (word: string) => {
@@ -44,9 +70,12 @@ export default function App() {
 
   useEffect(() => {
     Rune.initClient({
-      onChange: ({ game, yourPlayerId }) => {
+      onChange: ({ action, game, yourPlayerId }) => {
         setGame(game)
         setYourPlayerId(yourPlayerId)
+        if (action?.name === "ready" && game.votes[action.playerId]) {
+          playSound("select")
+        }
       },
     })
   }, [])
@@ -59,6 +88,10 @@ export default function App() {
       setShowControls(game?.persisted[yourPlayerId]?.showControls)
     }
   }, [game?.persisted, yourPlayerId])
+
+  useEffect(() => {
+    playSequence(["intro", "mainLoop"], 0.2)
+  }, [])
 
   if (!game) {
     // Rune only shows your game after an onChange() so no need for loading screen
@@ -101,12 +134,7 @@ export default function App() {
             showControls={showControls}
             t={t}
           />
-          <Help
-            close={() => setHelpOpen(false)}
-            open={() => setHelpOpen(true)}
-            opened={helpOpen}
-            t={t}
-          />
+          <Help close={closeHelp} open={openHelp} opened={helpOpen} t={t} />
         </>
       )}
       {(!yourPlayerId || game.spectators.includes(yourPlayerId)) && (

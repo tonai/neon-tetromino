@@ -583,17 +583,15 @@ p {
   justify-content: flex-end;
   align-items: center;
 }
-@property --garbage-color {
-  syntax: "<color>"; /* <- defined as type number for the transition to work */
-  initial-value: red;
-  inherits: false;
-}
 .game__garbage {
   width: var(--block);
   height: var(--block);
   background: red;
   scale: 0.7;
   animation: 2s linear infinite both shine;
+  position: relative;
+  z-index: 2;
+  transform: translate(0);
 }
 @keyframes shine {
   0% {
@@ -658,6 +656,7 @@ p {
   left: 0;
   z-index: 1;
   transform: translateZ(0);
+  transition: all linear 100ms;
 }
 .block__cell:before {
   content: "";

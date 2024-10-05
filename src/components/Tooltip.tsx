@@ -1,3 +1,4 @@
+import { playSound } from "@tonai/game-utils"
 import { MouseEvent, ReactNode, useCallback, useEffect, useState } from "react"
 
 interface ITooltipProps {
@@ -12,11 +13,16 @@ export default function Tooltip(props: ITooltipProps) {
     classNames.push("tooltip__content--open")
   }
   const close = useCallback(() => {
-    setOpened(false)
-  }, [])
+    if (opened) {
+      setOpened(false)
+    }
+  }, [opened])
   const open = useCallback(() => {
-    setOpened(true)
-  }, [])
+    if (!opened) {
+      playSound("button")
+      setOpened(true)
+    }
+  }, [opened])
 
   useEffect(() => {
     if (opened) {

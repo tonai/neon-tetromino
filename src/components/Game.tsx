@@ -1,10 +1,12 @@
+import { useEffect, useRef } from "react"
 import { PlayerId } from "rune-sdk"
+import { createArray, playSound } from "@tonai/game-utils"
+
 import { GameState } from "../types/logic.ts"
 
 import NextBlock from "./NextBlock.tsx"
 import Well from "./Well.tsx"
 import Controls from "./Controls.tsx"
-import { createArray } from "@tonai/game-utils"
 
 export interface IGameProps {
   game: GameState
@@ -20,6 +22,41 @@ export default function Game(props: IGameProps) {
   const totalGarbage = createArray(
     playerGarbage?.rows.reduce((a, b) => a + b, 0) ?? 0
   )
+
+  const clearedLines = useRef(playerState.clearedLines)
+  useEffect(() => {
+    if (
+      playerState.clearedLines !== clearedLines.current &&
+      playerState.clearedLines.length > 0
+    ) {
+      playSound("clear")
+      clearedLines.current = playerState.clearedLines
+    }
+  }, [playerState.clearedLines])
+
+  useEffect(() => {
+    if (playerState.gameOver) {
+      playSound("lost")
+    }
+  }, [playerState.gameOver])
+
+  const matrix = useRef(playerState.block.matrix)
+  const id = useRef(playerState.block.id)
+  useEffect(() => {
+    if (
+      playerState.block.matrix !== matrix.current &&
+      playerState.block.id === id.current
+    ) {
+      playSound("rotate")
+      matrix.current = playerState.block.matrix
+    }
+  }, [playerState.block.matrix, playerState.block.id])
+  useEffect(() => {
+    if (playerState.block.id !== id.current) {
+      id.current = playerState.block.id
+    }
+  }, [playerState.block.matrix, playerState.block.id])
+
   return (
     <div className="game">
       <Well playerState={playerState} />

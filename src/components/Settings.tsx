@@ -1,4 +1,5 @@
 import { MouseEvent, useEffect } from "react"
+import { playSound } from "@tonai/game-utils"
 
 import Gear from "../icons/Gear"
 import { Locale, locales } from "../constants/i18n"
@@ -41,12 +42,14 @@ export default function Settings(props: ISettingsProps) {
 
   function handleLocale(locale: Locale) {
     return () => {
+      playSound("button")
       setLocale(locale)
       Rune.actions.setLocale(locale)
     }
   }
 
   function handleShowControls(showControls: boolean) {
+    playSound("button")
     setShowControls(showControls)
     Rune.actions.setShowControls(showControls)
   }

@@ -23,6 +23,11 @@ export default function StartScreen(props: IStartScreenProps) {
     },
     { [Mode.BR]: [], [Mode.ENDLESS]: [] }
   )
+
+  function handleSelect(mode: Mode) {
+    return () => Rune.actions.ready(mode)
+  }
+
   return (
     <div className="start-screen">
       <Title />
@@ -32,7 +37,7 @@ export default function StartScreen(props: IStartScreenProps) {
             className="button text"
             disabled={players.length < minPlayers[mode]}
             type="button"
-            onClick={() => Rune.actions.ready(mode)}
+            onClick={handleSelect(mode)}
           >
             {t(mode)}
           </button>
