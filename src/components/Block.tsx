@@ -3,11 +3,11 @@ import { BlockType, Block as IBlock } from "../types"
 
 interface IBlockProps {
   block: IBlock
-  gameOver: boolean
+  gameOver?: boolean
   position?: boolean
 }
 
-function getBlock(tetromino: number[][], gameOver: boolean) {
+function getBlock(tetromino: number[][], gameOver: boolean = false) {
   return tetromino.map((line, i) =>
     line.map((cell, j) =>
       cell ? (

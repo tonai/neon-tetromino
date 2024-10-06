@@ -11,7 +11,6 @@ function Garbage(props: IGarbageProps) {
   const { garbage } = props
   const totalGarbage = createArray(garbage.rows)
 
-
   return (
     <div className="garbage">
       {totalGarbage.map((_, i) => (

@@ -5,7 +5,7 @@ import Avatar from "./Avatar"
 
 interface IPlayerProps {
   id: string
-  playerRefs: MutableRefObject<Record<string, HTMLDivElement>>
+  playerRefs?: MutableRefObject<Record<string, HTMLDivElement>>
   uiState: PlayerUiState
 }
 
@@ -15,7 +15,7 @@ function Player(props: IPlayerProps) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (ref.current) {
+    if (playerRefs && ref.current) {
       playerRefs.current[id] = ref.current
     }
   }, [id, playerRefs])
