@@ -2,8 +2,8 @@ import { PlayerId, RuneClient } from "rune-sdk"
 import { Block, BlockType, GarbageType } from "./block"
 
 export enum Step {
-  PLAY,
-  WAIT,
+  PLAY = "play",
+  WAIT = "wait",
 }
 
 export enum Mode {
@@ -36,9 +36,16 @@ export interface PlayerRenderState {
   well: Well
 }
 
+export interface Garbage {
+  canceled?: boolean
+  id: string
+  from: PlayerId
+  rows: number
+}
+
 export interface PlayerGarbage {
+  garbages: Garbage[]
   id: PlayerId
-  rows: number[]
 }
 
 export interface GameState {
@@ -63,6 +70,7 @@ type GameActions = {
   ready: (vote: Mode) => void
   rightDown: () => void
   rightUp: () => void
+  sendGarbage: (garbage: number) => void
   setLocale: (locale: string) => void
   setShowControls: (showControls: boolean) => void
 }

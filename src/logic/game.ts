@@ -32,5 +32,5 @@ export function startRound(game: GameState) {
     game.playerIds.map((id) => [id, { clearedLines: [], score: 0 }])
   )
 
-  game.playersGarbage = game.playerIds.map((id) => ({ id, rows: [] }))
+  game.playersGarbage = game.playerIds.map((id) => ({ id, garbages: [] }))
 }

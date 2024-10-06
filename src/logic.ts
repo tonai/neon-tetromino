@@ -13,6 +13,7 @@ import {
   reset,
   rotate,
   saveHighScore,
+  sendGarbage,
 } from "./logic/utils"
 import { Mode, Step } from "./types"
 
@@ -126,6 +127,9 @@ Rune.initLogic({
       const playerState = game.playersState[playerId]
       playerState.right = false
       playerState.actionSpeedCount = 0
+    },
+    sendGarbage(garbage: number, { game, playerId }) {
+      sendGarbage(game, garbage, playerId)
     },
     setLocale(locale: string, { game, playerId }) {
       game.persisted[playerId].locale = locale
@@ -251,43 +255,35 @@ Rune.initLogic({
             if (game.mode === Mode.BR) {
               let garbage = getGarbage(result)
               const playerGarbage = game.playersGarbage.find(
-                ({ id, rows }) => id === playerId && rows.length > 0
+                ({ garbages, id }) => id === playerId && garbages.length > 0
               )
               // Cancel garbage
               if (playerGarbage && garbage) {
-                const total = playerGarbage.rows.reduce((a, b) => a + b, 0)
+                const total = playerGarbage.garbages.reduce(
+                  (a, b) => a + b.rows,
+                  0
+                )
                 if (total <= garbage) {
-                  playerGarbage.rows = []
+                  playerGarbage.garbages = []
                   garbage -= total
                 } else {
-                  playerGarbage.rows = playerGarbage.rows
-                    .map((lines) => {
-                      const remaining = Math.min(lines - garbage, 0)
-                      garbage -= lines
-                      return remaining
+                  playerGarbage.garbages = playerGarbage.garbages
+                    .map(({ from, id, rows }) => {
+                      const remaining = Math.min(rows - garbage, 0)
+                      garbage -= rows
+                      return { canceled: true, id, from, rows: remaining }
                     })
                     .filter((lines) => lines)
                 }
               }
               // Add garbage to well
               if (playerGarbage) {
-                addGarbage(well, playerGarbage.rows)
-                playerGarbage.rows = []
+                addGarbage(well, playerGarbage.garbages)
+                playerGarbage.garbages = []
               }
               // Send garbage
               if (garbage) {
-                const playerGarbage = game.playersGarbage.find(
-                  ({ id }) => id !== playerId
-                )
-                if (playerGarbage) {
-                  // Insert garbage and move item at the end of the list
-                  playerGarbage.rows.push(garbage)
-                  game.playersGarbage.splice(
-                    game.playersGarbage.indexOf(playerGarbage),
-                    1
-                  )
-                  game.playersGarbage.push(playerGarbage)
-                }
+                sendGarbage(game, garbage, playerId)
               }
             }
           }

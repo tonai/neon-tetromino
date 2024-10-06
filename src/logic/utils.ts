@@ -10,6 +10,7 @@ import {
   Block,
   BlockType,
   GameState,
+  Garbage,
   GarbageType,
   Persisted,
   PlayerRenderState,
@@ -169,21 +170,25 @@ export function getGarbage(lineCleared: number) {
   }
 }
 
-export function addGarbage(well: Well, rows: number[]): boolean {
+export function addGarbage(well: Well, garbages: Garbage[]): boolean {
   const holes = []
-  const total = rows.reduce((a, b) => a + b, 0)
+  const total = garbages.reduce((a, b) => a + b.rows, 0)
   const out = well.slice(0, total).some((row) => row.some((cell) => cell))
-  for (const lines of rows) {
+  for (const garbage of garbages) {
     const holeIndex = unusedRandomInt(holes, 9)
     holes.push(holeIndex)
     // Move up
-    for (let row = lines; row <= well.length - 1; row++) {
+    for (let row = garbage.rows; row <= well.length - 1; row++) {
       for (let c = 0; c < well[row].length; c++) {
-        well[row - lines][c] = well[row][c]
+        well[row - garbage.rows][c] = well[row][c]
       }
     }
     // Insert
-    for (let row = well.length - 1; row > well.length - 1 - lines; row--) {
+    for (
+      let row = well.length - 1;
+      row > well.length - 1 - garbage.rows;
+      row--
+    ) {
       for (let c = 0; c < well[row].length; c++) {
         well[row][c] = c !== holeIndex ? GarbageType.G : null
       }
@@ -213,4 +218,18 @@ export function reset(playerState: PlayerState) {
   playerState.center = false
   playerState.left = false
   playerState.right = false
+}
+
+export function sendGarbage(game: GameState, rows: number, playerId: string) {
+  const playerGarbage = game.playersGarbage.find(({ id }) => id !== playerId)
+  if (playerGarbage) {
+    // Insert garbage and move item at the end of the list
+    playerGarbage.garbages.push({
+      from: playerId,
+      id: generateId(),
+      rows,
+    })
+    game.playersGarbage.splice(game.playersGarbage.indexOf(playerGarbage), 1)
+    game.playersGarbage.push(playerGarbage)
+  }
 }

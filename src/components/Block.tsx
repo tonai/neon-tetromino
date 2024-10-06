@@ -39,7 +39,6 @@ function Block(props: IBlockProps) {
     style.translate = `calc(var(--block) * ${column} * var(--factor)) calc(var(--block) * ${row - 2} * var(--factor))`
   }
 
-  console.log(gameOver)
   return (
     <div className={classNames.join(" ")} style={style}>
       {getBlock(matrix, gameOver)}

@@ -1,12 +1,13 @@
 import { useEffect, useRef } from "react"
 import { PlayerId } from "rune-sdk"
-import { createArray, playSound } from "@tonai/game-utils"
+import { playSound } from "@tonai/game-utils"
 
 import { GameState } from "../types/logic.ts"
 
 import NextBlock from "./NextBlock.tsx"
 import Well from "./Well.tsx"
 import Controls from "./Controls.tsx"
+import Garbage from "./Garbage.tsx"
 
 export interface IGameProps {
   game: GameState
@@ -24,9 +25,6 @@ export default function Game(props: IGameProps) {
   const renderState = playersRenderState[playerId]
   const uiState = playersUiState[playerId]
   const playerGarbage = playersGarbage.find(({ id }) => id === playerId)
-  const totalGarbage = createArray(
-    playerGarbage?.rows.reduce((a, b) => a + b, 0) ?? 0
-  )
 
   const clearedLines = useRef(uiState.clearedLines)
   useEffect(() => {
@@ -51,8 +49,8 @@ export default function Game(props: IGameProps) {
       <div className="game__column">
         <NextBlock block={renderState.sequence[0]} />
         <div className="game__garbages">
-          {totalGarbage.map((_, i) => (
-            <div key={i} className="game__garbage"></div>
+          {playerGarbage?.garbages.map((garbage) => (
+            <Garbage key={garbage.id} garbage={garbage} />
           ))}
         </div>
       </div>

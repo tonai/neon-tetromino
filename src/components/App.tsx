@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback, useEffect, useState } from "react"
+import { MouseEvent, useCallback, useEffect, useRef, useState } from "react"
 import { GameStateWithPersisted, PlayerId } from "rune-sdk"
 import {
   createTranslator,
@@ -43,6 +43,7 @@ export default function App() {
     return language in locales ? language : "en"
   })
   const [showControls, setShowControls] = useState(false)
+  const playerRefs = useRef<Record<string, HTMLDivElement>>({})
 
   const closeSettings = useCallback(() => {
     playSound("close")
@@ -100,7 +101,7 @@ export default function App() {
 
   return (
     <>
-      <Sun />
+      <Sun step={game.step} />
       {yourPlayerId && !game.spectators.includes(yourPlayerId) && (
         <>
           {game.step === Step.WAIT && (
@@ -118,6 +119,7 @@ export default function App() {
             <>
               <Players
                 playerIds={game.playerIds}
+                playerRefs={playerRefs}
                 playersUiState={game.playersUiState}
                 spectators={game.spectators}
               />

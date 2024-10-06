@@ -322,18 +322,6 @@ p {
   animation: sunset 5s linear infinite;
   animation-delay: 0s;
 }
-.sun__line:nth-child(3) {
-  animation-delay: -1s;
-}
-.sun__line:nth-child(4) {
-  animation-delay: -2s;
-}
-.sun__line:nth-child(5) {
-  animation-delay: -3s;
-}
-.sun__line:nth-child(6) {
-  animation-delay: -4s;
-}
 @keyframes sunset {
   0% {
     background: #6b3487;
@@ -361,6 +349,37 @@ p {
     height: calc(var(--size) * 3);
     transform: translateY(calc(var(--size) * 40));
   }
+}
+.sun--play .sun__line {
+  background: #372757;
+  animation: sunset-game 5s linear infinite;
+  animation-delay: 0s;
+}
+@keyframes sunset-game {
+  0% {
+    height: 0;
+    transform: translateY(calc(var(--size) * 15));
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    height: calc(var(--size) * 3);
+    transform: translateY(calc(var(--size) * 40));
+  }
+}
+.sun__line:nth-child(3) {
+  animation-delay: -1s;
+}
+.sun__line:nth-child(4) {
+  animation-delay: -2s;
+}
+.sun__line:nth-child(5) {
+  animation-delay: -3s;
+}
+.sun__line:nth-child(6) {
+  animation-delay: -4s;
 }
 
 /* Players */
@@ -576,11 +595,19 @@ p {
   background-color: var(--box-color);
   box-shadow: var(--box-shadow);
   display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Garbage */
+.garbage {
+  display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
 }
-.game__garbage {
+.garbage__item {
   width: var(--block);
   height: var(--block);
   background: red;
@@ -588,7 +615,7 @@ p {
   animation: 2s linear infinite both shine;
   position: relative;
   z-index: 2;
-  transform: translate(0);
+  transform: translateZ(0);
 }
 @keyframes shine {
   0% {
