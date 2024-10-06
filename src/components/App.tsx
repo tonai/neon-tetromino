@@ -39,8 +39,12 @@ export default function App() {
   const [helpOpen, setHelpOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [locale, setLocale] = useState<Locale>(() => {
-    const language = navigator.language.split("-")[0]
-    return language in locales ? language : "en"
+    const preferred = [
+      ...new Set(navigator.languages.map((language) => language.split("-")[0])),
+    ]
+    return (
+      Object.keys(locales).find((locale) => preferred.includes(locale)) ?? "en"
+    )
   })
   const [showControls, setShowControls] = useState(false)
   const playerRefs = useRef<Record<string, HTMLDivElement>>({})
