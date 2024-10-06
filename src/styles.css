@@ -673,6 +673,9 @@ p {
     0 0 var(--size) var(--color),
     inset 0 0 var(--size) var(--color);
 }
+.block__cell--gameOver {
+  filter: grayscale(1);
+}
 .block--I {
   top: calc(var(--block) * -1);
 }

@@ -8,7 +8,7 @@ export function startRound(game: GameState) {
     game.playerIds.map((id) => {
       const sequence = getRandomSequence()
       const block = sequence.shift()!
-      return [id, { block, sequence, well: getWell() }]
+      return [id, { block, gameOver: false, sequence, well: getWell() }]
     })
   )
 
@@ -20,7 +20,6 @@ export function startRound(game: GameState) {
         actionSpeedCount: 0,
         bottom: false,
         center: false,
-        gameOver: false,
         left: false,
         level: 1,
         right: false,

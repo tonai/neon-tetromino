@@ -18,7 +18,6 @@ export interface PlayerState {
   actionSpeedCount: number
   bottom: boolean
   center: boolean
-  gameOver: boolean
   left: boolean
   level: number
   right: boolean
@@ -32,6 +31,7 @@ export interface PlayerUiState {
 
 export interface PlayerRenderState {
   block: Block
+  gameOver: boolean
   sequence: Block[]
   well: Well
 }

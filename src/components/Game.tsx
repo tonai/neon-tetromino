@@ -20,9 +20,7 @@ function areArrayDifferent(a1: number[], a2: number[]) {
 
 export default function Game(props: IGameProps) {
   const { game, playerId, showControls } = props
-  const { playersGarbage, playersRenderState, playersState, playersUiState } =
-    game
-  const playerState = playersState[playerId]
+  const { playersGarbage, playersRenderState, playersUiState } = game
   const renderState = playersRenderState[playerId]
   const uiState = playersUiState[playerId]
   const playerGarbage = playersGarbage.find(({ id }) => id === playerId)
@@ -42,10 +40,10 @@ export default function Game(props: IGameProps) {
   }, [uiState.clearedLines])
 
   useEffect(() => {
-    if (playerState.gameOver) {
+    if (renderState.gameOver) {
       playSound("lost")
     }
-  }, [playerState.gameOver])
+  }, [renderState.gameOver])
 
   return (
     <div className="game">
@@ -58,7 +56,7 @@ export default function Game(props: IGameProps) {
           ))}
         </div>
       </div>
-      {!game.playersState[playerId].gameOver && (
+      {!renderState.gameOver && (
         <Controls renderState={renderState} showControls={showControls} />
       )}
     </div>

@@ -1,18 +1,19 @@
-import { CSSProperties } from "react"
+import { CSSProperties, memo } from "react"
 import { BlockType, Block as IBlock } from "../types"
 
 interface IBlockProps {
   block: IBlock
+  gameOver: boolean
   position?: boolean
 }
 
-function getBlock(tetromino: number[][]) {
+function getBlock(tetromino: number[][], gameOver: boolean) {
   return tetromino.map((line, i) =>
     line.map((cell, j) =>
       cell ? (
         <div
           key={`${i}-${j}`}
-          className="block__cell"
+          className={`block__cell ${gameOver ? "block__cell--gameOver" : ""}`}
           style={{
             translate: `calc(var(--block) * ${j} * var(--factor)) calc(var(--block) * ${i} * var(--factor)) 0px`,
           }}
@@ -22,8 +23,8 @@ function getBlock(tetromino: number[][]) {
   )
 }
 
-export default function Block(props: IBlockProps) {
-  const { block, position } = props
+function Block(props: IBlockProps) {
+  const { block, gameOver, position } = props
   const { column, matrix, row, type } = block
   const key = Object.keys(BlockType)[Object.values(BlockType).indexOf(type)]
   const classNames = ["block", `block--${key}`]
@@ -37,9 +38,13 @@ export default function Block(props: IBlockProps) {
     classNames.push("block--falling")
     style.translate = `calc(var(--block) * ${column} * var(--factor)) calc(var(--block) * ${row - 2} * var(--factor))`
   }
+
+  console.log(gameOver)
   return (
     <div className={classNames.join(" ")} style={style}>
-      {getBlock(matrix)}
+      {getBlock(matrix, gameOver)}
     </div>
   )
 }
+
+export default memo(Block)

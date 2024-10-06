@@ -167,9 +167,10 @@ Rune.initLogic({
     }
     const entries = Object.entries(game.playersState)
     const uiEntries = Object.entries(game.playersUiState)
+    const renderEntries = Object.entries(game.playersRenderState)
     // Check game over
-    const nonGameOverPlayers = entries.filter(
-      ([, playerState]) => !playerState.gameOver
+    const nonGameOverPlayers = renderEntries.filter(
+      ([, renderState]) => !renderState.gameOver
     )
     if (
       (game.mode === Mode.BR && nonGameOverPlayers.length <= 1) ||
@@ -188,11 +189,11 @@ Rune.initLogic({
     }
     // Update loop
     for (const [playerId, playerState] of entries) {
-      if (playerState.gameOver) {
-        continue
-      }
       const uiState = game.playersUiState[playerId]
       const renderState = game.playersRenderState[playerId]
+      if (renderState.gameOver) {
+        continue
+      }
       const speed = getSpeed(Math.floor(playerState.level))
       // Player controls
       if (playerState.center || playerState.left || playerState.right) {
@@ -220,7 +221,7 @@ Rune.initLogic({
           block.row = block.row - 1
           const result = placeBlock(well, block)
           if (result === true) {
-            playerState.gameOver = true
+            renderState.gameOver = true
           } else {
             // Sometimes block continue to fall quickly so reset when block is placed
             reset(playerState)
