@@ -568,6 +568,9 @@ p {
   font-family: var(--font-exo);
   font-size: calc(var(--size) * 16);
 }
+.title--small {
+  font-size: calc(var(--size) * 14);
+}
 .title__sub-title {
   position: relative;
   z-index: 1;

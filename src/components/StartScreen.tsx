@@ -1,4 +1,4 @@
-import { memo } from "react"
+import { memo, useState } from "react"
 import { minPlayers } from "../constants"
 import { Mode, Persisted } from "../types"
 
@@ -15,6 +15,7 @@ export interface IStartScreenProps {
 
 function StartScreen(props: IStartScreenProps) {
   const { persisted, players, t, votes } = props
+  const [easterEggCounter, setEasterEggCounter] = useState(0)
   const playersByMode = Object.entries(votes).reduce<Record<Mode, string[]>>(
     (acc, [id, vote]) => {
       if (vote) {
@@ -26,12 +27,22 @@ function StartScreen(props: IStartScreenProps) {
   )
 
   function handleSelect(mode: Mode) {
-    return () => Rune.actions.ready(mode)
+    return () => {
+      Rune.actions.ready(mode)
+      if (mode === Mode.ENDLESS) {
+        setEasterEggCounter((x) => x + 1)
+      } else {
+        setEasterEggCounter(0)
+      }
+    }
   }
 
   return (
     <div className="start-screen">
-      <Title />
+      <Title
+        subtitle="neon"
+        title={easterEggCounter < 5 ? "TETROMINO" : "TETROMINOU"}
+      />
       {Object.values(Mode).map((mode) => (
         <div key={mode} className="start-screen__mode">
           <button
