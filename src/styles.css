@@ -591,10 +591,18 @@ p {
   display: flex;
   flex-direction: column;
 }
+.game__line {
+  display: flex;
+  margin-top: var(--block);
+}
+.game__level {
+  flex: 1;
+  font-size: calc(var(--size) * 5) !important;
+  text-align: center;
+}
 .game__garbages {
   width: var(--block);
   height: calc(var(--block) * 15);
-  margin-top: var(--block);
   background-color: var(--box-color);
   box-shadow: var(--box-shadow);
   display: flex;

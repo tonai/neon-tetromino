@@ -13,6 +13,7 @@ export interface IGameProps {
   game: GameState
   playerId: PlayerId
   showControls: boolean
+  t: (word: string) => string
 }
 
 function areArrayDifferent(a1: number[], a2: number[]) {
@@ -20,9 +21,11 @@ function areArrayDifferent(a1: number[], a2: number[]) {
 }
 
 export default function Game(props: IGameProps) {
-  const { game, playerId, showControls } = props
-  const { playersGarbage, playersRenderState, playersUiState } = game
+  const { game, playerId, showControls, t } = props
+  const { playersGarbage, playersRenderState, playersState, playersUiState } =
+    game
   const renderState = playersRenderState[playerId]
+  const playerState = playersState[playerId]
   const uiState = playersUiState[playerId]
   const playerGarbage = playersGarbage.find(({ id }) => id === playerId)
 
@@ -48,10 +51,17 @@ export default function Game(props: IGameProps) {
       <Well renderState={renderState} />
       <div className="game__column">
         <NextBlock block={renderState.sequence[0]} />
-        <div className="game__garbages">
-          {playerGarbage?.garbages.map((garbage) => (
-            <Garbage key={garbage.id} garbage={garbage} />
-          ))}
+        <div className="game__line">
+          <div className="game__garbages">
+            {playerGarbage?.garbages.map((garbage) => (
+              <Garbage key={garbage.id} garbage={garbage} />
+            ))}
+          </div>
+          <div className="game__level text">
+            {t("Level")}
+            <br />
+            {playerState.level}
+          </div>
         </div>
       </div>
       {!renderState.gameOver && (

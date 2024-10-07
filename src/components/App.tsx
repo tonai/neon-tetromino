@@ -131,6 +131,7 @@ export default function App() {
                 game={game}
                 playerId={yourPlayerId}
                 showControls={showControls}
+                t={t}
               />
             </>
           )}
