@@ -70,7 +70,7 @@ type GameActions = {
   ready: (vote: Mode) => void
   rightDown: () => void
   rightUp: () => void
-  sendGarbage: (garbage: number) => void
+  // sendGarbage: (garbage: number) => void
   setLocale: (locale: string) => void
   setShowControls: (showControls: boolean) => void
 }

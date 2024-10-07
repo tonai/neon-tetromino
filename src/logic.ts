@@ -128,9 +128,9 @@ Rune.initLogic({
       playerState.right = false
       playerState.actionSpeedCount = 0
     },
-    sendGarbage(garbage: number, { game, playerId }) {
-      sendGarbage(game, garbage, playerId)
-    },
+    // sendGarbage(garbage: number, { game, playerId }) {
+    //   sendGarbage(game, garbage, playerId)
+    // },
     setLocale(locale: string, { game, playerId }) {
       game.persisted[playerId].locale = locale
     },
